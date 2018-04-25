@@ -1,13 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//添加
 
 android {
     compileSdkVersion 27
+
     defaultConfig {
-        applicationId "com.wangjing.retrofitutils"
+//        applicationId "com.wangjing.retrofitutils"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
     buildTypes {
         release {
@@ -24,4 +26,26 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+}
+
+
+//添加
+allprojects {
+    tasks.withType(Javadoc) {
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+    }
+}
+
+//添加
+publish {
+    userOrg = 'wangjinggm'//bintray.com用户名
+    groupId = 'com.wangjing'//jcenter上的路径
+    artifactId = 'retrofitutils'//项目名称
+    publishVersion = '0.0.1'//版本号
+    desc = 'retrofitutils'//描述，不重要
+    website = 'https://github.com/Lee-Wang-Jing/RetrofitUtils'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }
