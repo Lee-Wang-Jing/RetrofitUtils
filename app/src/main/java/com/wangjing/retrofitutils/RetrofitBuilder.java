@@ -15,6 +15,19 @@ public class RetrofitBuilder {
     private int connectTimeout;
     private int readTimeout;
     private int writeTimeout;
+    private String userAgent;
+
+
+    /**
+     * 设置请求的userAgent
+     * @param userAgent
+     * @return
+     */
+    public RetrofitBuilder usetAgent(String userAgent) {
+        this.userAgent = userAgent;
+        return this;
+    }
+
 
 
     /**
