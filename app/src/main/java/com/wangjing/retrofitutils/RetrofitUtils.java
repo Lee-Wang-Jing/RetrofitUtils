@@ -26,9 +26,8 @@ public class RetrofitUtils {
     private static HttpLoggingInterceptor interceptor;
 
     /**
-     *
      * @param serviceClass
-     * @param hashMap header的键值对集合
+     * @param hashMap      header的键值对集合
      * @param <S>
      * @return
      */
@@ -51,11 +50,11 @@ public class RetrofitUtils {
      * 不包含baseurl
      *
      * @param serviceClass
-     * @param hashMap header的键值对集合
+     * @param hashMap      header的键值对集合
      * @param <S>
      * @return
      */
-    public static <S> S creatApiNoBaseUrl(Class<S> serviceClass,HashMap<String, String> hashMap) {
+    public static <S> S creatApiNoBaseUrl(Class<S> serviceClass, HashMap<String, String> hashMap) {
         synchronized (RetrofitUtils.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
@@ -69,6 +68,24 @@ public class RetrofitUtils {
         }
     }
 
+
+    /**
+     * 清空Retrofit
+     */
+    public void clearRetrofit() {
+        if (retrofit != null) {
+            retrofit = null;
+        }
+    }
+
+    /**
+     * 清空okhttpBuilder
+     */
+    public void clearOkhttpBuilder() {
+        if (okhttpBuilder != null) {
+            okhttpBuilder = null;
+        }
+    }
 
     /**
      * 获取OkHttpClient
