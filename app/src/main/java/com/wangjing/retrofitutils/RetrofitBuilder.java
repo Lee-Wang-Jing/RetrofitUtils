@@ -17,6 +17,10 @@ public class RetrofitBuilder {
     private int writeTimeout;
     private String userAgent;
 
+    /**
+     *
+     * @return
+     */
     public static RetrofitBuilder newBuilder() {
         return new RetrofitBuilder();
     }
@@ -24,7 +28,7 @@ public class RetrofitBuilder {
     /**
      * 设置请求的userAgent
      *
-     * @param userAgent
+     * @param userAgent usetAgent
      * @return
      */
     public RetrofitBuilder usetAgent(String userAgent) {
@@ -47,7 +51,7 @@ public class RetrofitBuilder {
     /**
      * 设置网络请求的连接超时时间
      *
-     * @param connectTimeout
+     * @param connectTimeout 超时秒数
      * @return
      */
     public RetrofitBuilder connectTimeout(int connectTimeout) {
@@ -58,7 +62,7 @@ public class RetrofitBuilder {
     /**
      * 设置网络请求的读取超时时间
      *
-     * @param readTimeout
+     * @param readTimeout 超时秒数
      * @return
      */
     public RetrofitBuilder readTimeout(int readTimeout) {
@@ -69,7 +73,7 @@ public class RetrofitBuilder {
     /**
      * 设置网络请求的写入超时时间
      *
-     * @param writeTimeout
+     * @param writeTimeout 超时秒数
      * @return
      */
     public RetrofitBuilder writeTimeout(int writeTimeout) {

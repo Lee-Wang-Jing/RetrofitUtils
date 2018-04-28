@@ -21,19 +21,20 @@ public class RetrofitConfig {
 //        RetrofitConfig.baseUrl = baseUrl;
 //    }
 
-    public static String getBaseUrl() {
+
+    public String getBaseUrl() {
         return baseUrl;
     }
 
-    public static int getConnectTimeout() {
+    public int getConnectTimeout() {
         return connectTimeout != 0 ? connectTimeout : 30;
     }
 
-    public static int getReadTimeout() {
+    public int getReadTimeout() {
         return readTimeout != 0 ? connectTimeout : 30;
     }
 
-    public static int getWriteTimeout() {
+    public int getWriteTimeout() {
         return writeTimeout != 0 ? connectTimeout : 30;
     }
 }

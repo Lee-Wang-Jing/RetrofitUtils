@@ -1,5 +1,7 @@
 package com.wangjing.retrofitutils;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
@@ -21,20 +23,37 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * 最近修改：2018/4/16 16:09 by WangJing
  */
 public class RetrofitUtils {
+    private static Context mContext;
+    private static RetrofitConfig retrofitConfig;
     private static Retrofit retrofit;
     private static OkHttpClient.Builder okhttpBuilder;
     private static HttpLoggingInterceptor interceptor;
 
+
     /**
+     * 初始化
+     *
+     * @param context Context
+     * @param Config  RetrofitConfig
+     */
+    public static void initialize(Context context, RetrofitConfig Config) {
+        mContext = context;
+        retrofitConfig = Config;
+    }
+
+
+    /**
+     * 创建带有默认BaseUrl的serviceClass
+     *
      * @param serviceClass
      * @param hashMap      header的键值对集合
      * @return
      */
-    public <S> S creatApi(Class<S> serviceClass, HashMap<String, String> hashMap) {
+    public <T> T creatBaseApi(Class<T> serviceClass, HashMap<String, String> hashMap) {
         synchronized (RetrofitUtils.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl("" + RetrofitConfig.getBaseUrl())
+                        .baseUrl("" + retrofitConfig.getBaseUrl())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .client(getHttpClient(hashMap))
@@ -44,24 +63,43 @@ public class RetrofitUtils {
         }
     }
 
-
     /**
-     * 不包含baseurl
+     * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的
      *
      * @param serviceClass
      * @param hashMap      header的键值对集合
      * @return
      */
-    public static <S> S creatApiNoBaseUrl(Class<S> serviceClass, HashMap<String, String> hashMap) {
+    public <T> T creatNewBaseApi(Class<T> serviceClass, HashMap<String, String> hashMap) {
         synchronized (RetrofitUtils.class) {
-            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        //设置 Json 转换器
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(getHttpClient(hashMap))
-                        .build();
-            }
+            clearRetrofit();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("" + retrofitConfig.getBaseUrl())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .client(getHttpClient(hashMap))
+                    .build();
+            return retrofit.create(serviceClass);
+        }
+    }
+
+    /**
+     * 创建不带有默认BaseUrl的serviceClass，记住使用了creatNoBaseUrlApi方法后如果再次使用creatBaseApi是无效的，因为retrofit不为null，需要clearRetrofit
+     *
+     * @param serviceClass serviceClass
+     * @param hashMap      header的键值对集合
+     * @return
+     */
+    public static <T> T creatNoBaseUrlApi(Class<T> serviceClass, HashMap<String, String> hashMap) {
+        synchronized (RetrofitUtils.class) {
+            //如果refrofit不为null，则滞空，创建新的retrofit
+            clearRetrofit();
+            retrofit = new Retrofit.Builder()
+                    //设置 Json 转换器
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(getHttpClient(hashMap))
+                    .build();
             return retrofit.create(serviceClass);
         }
     }
@@ -70,7 +108,7 @@ public class RetrofitUtils {
     /**
      * 清空Retrofit
      */
-    public void clearRetrofit() {
+    public static void clearRetrofit() {
         if (retrofit != null) {
             retrofit = null;
         }
@@ -79,7 +117,7 @@ public class RetrofitUtils {
     /**
      * 清空okhttpBuilder
      */
-    public void clearOkhttpBuilder() {
+    public static void clearOkhttpBuilder() {
         if (okhttpBuilder != null) {
             okhttpBuilder = null;
         }
@@ -95,9 +133,9 @@ public class RetrofitUtils {
             if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
                 //设置超时
-                okhttpBuilder.connectTimeout(RetrofitConfig.getConnectTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.readTimeout(RetrofitConfig.getReadTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.writeTimeout(RetrofitConfig.getWriteTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.connectTimeout(retrofitConfig.getConnectTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.readTimeout(retrofitConfig.getReadTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.writeTimeout(retrofitConfig.getWriteTimeout(), TimeUnit.SECONDS);
                 //错误重连
                 okhttpBuilder.retryOnConnectionFailure(true);
                 //设置请求头Header
