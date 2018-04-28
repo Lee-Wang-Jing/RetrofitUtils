@@ -28,7 +28,6 @@ public class RetrofitUtils {
     /**
      * @param serviceClass
      * @param hashMap      header的键值对集合
-     * @param <S>
      * @return
      */
     public <S> S creatApi(Class<S> serviceClass, HashMap<String, String> hashMap) {
@@ -51,7 +50,6 @@ public class RetrofitUtils {
      *
      * @param serviceClass
      * @param hashMap      header的键值对集合
-     * @param <S>
      * @return
      */
     public static <S> S creatApiNoBaseUrl(Class<S> serviceClass, HashMap<String, String> hashMap) {

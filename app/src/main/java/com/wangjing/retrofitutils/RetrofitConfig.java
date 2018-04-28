@@ -13,9 +13,13 @@ public class RetrofitConfig {
     private static int readTimeout;
     private static int writeTimeout;
 
-    public RetrofitConfig(String baseUrl) {
-        RetrofitConfig.baseUrl = baseUrl;
+    public RetrofitConfig() {
+        super();
     }
+
+//    public RetrofitConfig(String baseUrl) {
+//        RetrofitConfig.baseUrl = baseUrl;
+//    }
 
     public static String getBaseUrl() {
         return baseUrl;

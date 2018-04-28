@@ -17,9 +17,13 @@ public class RetrofitBuilder {
     private int writeTimeout;
     private String userAgent;
 
+    public static RetrofitBuilder newBuilder() {
+        return new RetrofitBuilder();
+    }
 
     /**
      * 设置请求的userAgent
+     *
      * @param userAgent
      * @return
      */
@@ -27,7 +31,6 @@ public class RetrofitBuilder {
         this.userAgent = userAgent;
         return this;
     }
-
 
 
     /**
@@ -43,6 +46,7 @@ public class RetrofitBuilder {
 
     /**
      * 设置网络请求的连接超时时间
+     *
      * @param connectTimeout
      * @return
      */
@@ -53,6 +57,7 @@ public class RetrofitBuilder {
 
     /**
      * 设置网络请求的读取超时时间
+     *
      * @param readTimeout
      * @return
      */
@@ -63,6 +68,7 @@ public class RetrofitBuilder {
 
     /**
      * 设置网络请求的写入超时时间
+     *
      * @param writeTimeout
      * @return
      */
@@ -72,6 +78,6 @@ public class RetrofitBuilder {
     }
 
     public RetrofitConfig build() {
-        return new RetrofitConfig(baseUrl);
+        return new RetrofitConfig();
     }
 }
