@@ -46,17 +46,16 @@ public class RetrofitUtils {
      * 创建带有默认BaseUrl的serviceClass
      *
      * @param serviceClass
-     * @param hashMap      header的键值对集合
      * @return
      */
-    public <T> T creatBaseApi(Class<T> serviceClass, HashMap<String, String> hashMap) {
+    public <T> T creatBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
                         .baseUrl("" + retrofitConfig.getBaseUrl())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addConverterFactory(ScalarsConverterFactory.create())
-                        .client(getHttpClient(hashMap))
+                        .client(getHttpClient())
                         .build();
             }
             return retrofit.create(serviceClass);
@@ -67,17 +66,16 @@ public class RetrofitUtils {
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的
      *
      * @param serviceClass
-     * @param hashMap      header的键值对集合
-     * @return
+     * @return serviceClass
      */
-    public <T> T creatNewBaseApi(Class<T> serviceClass, HashMap<String, String> hashMap) {
+    public <T> T creatNewBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
-            clearRetrofit();
+            clearAll();
             retrofit = new Retrofit.Builder()
                     .baseUrl("" + retrofitConfig.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
-                    .client(getHttpClient(hashMap))
+                    .client(getHttpClient())
                     .build();
             return retrofit.create(serviceClass);
         }
@@ -87,23 +85,21 @@ public class RetrofitUtils {
      * 创建不带有默认BaseUrl的serviceClass，记住使用了creatNoBaseUrlApi方法后如果再次使用creatBaseApi是无效的，因为retrofit不为null，需要clearRetrofit
      *
      * @param serviceClass serviceClass
-     * @param hashMap      header的键值对集合
      * @return
      */
-    public static <T> T creatNoBaseUrlApi(Class<T> serviceClass, HashMap<String, String> hashMap) {
+    public static <T> T creatNoBaseUrlApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             //如果refrofit不为null，则滞空，创建新的retrofit
-            clearRetrofit();
+            clearAll();
             retrofit = new Retrofit.Builder()
                     //设置 Json 转换器
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(getHttpClient(hashMap))
+                    .client(getHttpClient())
                     .build();
             return retrofit.create(serviceClass);
         }
     }
-
 
     /**
      * 清空Retrofit
@@ -124,11 +120,19 @@ public class RetrofitUtils {
     }
 
     /**
+     * 清空Retrofit和okhttpBuilder
+     */
+    public static synchronized void clearAll() {
+        clearRetrofit();
+        clearOkhttpBuilder();
+    }
+
+    /**
      * 获取OkHttpClient
      *
      * @return
      */
-    private static OkHttpClient getHttpClient(final HashMap<String, String> hashMap) {
+    private static OkHttpClient getHttpClient() {
         synchronized (RetrofitUtils.class) {
             if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
@@ -146,11 +150,12 @@ public class RetrofitUtils {
                         //.addHeader(String name, String value) 不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
                         //.header(String name, String value) 会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
                         Request.Builder builder = chain.request().newBuilder();
-                        if (hashMap != null && hashMap.size() > 0) {
-                            Set<String> keys = hashMap.keySet();
+                        HashMap<String, String> headerHashMap = retrofitConfig.getHeaderHashMap();
+                        if (headerHashMap != null && headerHashMap.size() > 0) {
+                            Set<String> keys = headerHashMap.keySet();
                             if (keys != null && keys.size() > 0) {
                                 for (String key : keys) {
-                                    builder.header("" + key, "" + hashMap.get(key));
+                                    builder.header("" + key, "" + headerHashMap.get(key));
                                 }
                             }
                         }
