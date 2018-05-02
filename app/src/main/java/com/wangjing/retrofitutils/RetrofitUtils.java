@@ -1,6 +1,7 @@
 package com.wangjing.retrofitutils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,22 +24,19 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * 最近修改：2018/4/16 16:09 by WangJing
  */
 public class RetrofitUtils {
-    private static Context mContext;
     private static RetrofitConfig retrofitConfig;
     private static Retrofit retrofit;
     private static OkHttpClient.Builder okhttpBuilder;
     private static HttpLoggingInterceptor interceptor;
 
-
     /**
      * 初始化
      *
-     * @param context Context
-     * @param Config  RetrofitConfig
+     * @param config  RetrofitConfig
      */
-    public static void initialize(Context context, RetrofitConfig Config) {
-        mContext = context;
-        retrofitConfig = Config;
+    public static void initialize(RetrofitConfig config) {
+        retrofitConfig = config;
+        Log.e("RetrofitUtils","RetrofitUtils初始化成功==》"+retrofitConfig.getBaseUrl());
     }
 
 
