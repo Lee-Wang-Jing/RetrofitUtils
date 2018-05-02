@@ -19,8 +19,13 @@ public class RetrofitConfig {
     private static HashMap<String, String> headerHashMap;
 
 
-    public RetrofitConfig() {
-        super();
+    protected RetrofitConfig(String baseUrl1, int connectTimeout1, int readTimeout1, int writeTimeout1, String userAgent1, HashMap<String, String> headerHashMap1) {
+        baseUrl = baseUrl1;
+        connectTimeout = connectTimeout1;
+        readTimeout = readTimeout1;
+        writeTimeout = writeTimeout1;
+        userAgent = userAgent1;
+        headerHashMap = headerHashMap1;
     }
 
 //    public RetrofitConfig(String baseUrl) {

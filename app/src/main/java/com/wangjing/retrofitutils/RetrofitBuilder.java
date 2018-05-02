@@ -1,5 +1,7 @@
 package com.wangjing.retrofitutils;
 
+import java.util.HashMap;
+
 /**
  * 作者：Created by WangJing on 2018/4/17.
  * 邮箱：wangjinggm@gmail.com
@@ -16,6 +18,8 @@ public class RetrofitBuilder {
     private int readTimeout;
     private int writeTimeout;
     private String userAgent;
+    //headerHashMap header的键值对集合
+    private HashMap<String, String> headerHashMap;
 
     /**
      * 设置请求的userAgent
@@ -73,7 +77,12 @@ public class RetrofitBuilder {
         return this;
     }
 
+    public RetrofitBuilder headerHashMap(HashMap<String, String> headerHashMap) {
+        this.headerHashMap = headerHashMap;
+        return this;
+    }
+
     public RetrofitConfig build() {
-        return new RetrofitConfig();
+        return new RetrofitConfig(baseUrl, connectTimeout, readTimeout, writeTimeout, userAgent, headerHashMap);
     }
 }
