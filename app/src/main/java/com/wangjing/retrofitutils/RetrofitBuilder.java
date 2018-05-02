@@ -18,14 +18,6 @@ public class RetrofitBuilder {
     private String userAgent;
 
     /**
-     *
-     * @return
-     */
-    public static RetrofitBuilder newBuilder() {
-        return new RetrofitBuilder();
-    }
-
-    /**
      * 设置请求的userAgent
      *
      * @param userAgent usetAgent
