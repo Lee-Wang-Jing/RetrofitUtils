@@ -212,4 +212,8 @@ public class RetrofitUtils {
             return okHttpClient;
         }
     }
+
+    public static RetrofitConfig getRetrofitConfig() {
+        return retrofitConfig;
+    }
 }
