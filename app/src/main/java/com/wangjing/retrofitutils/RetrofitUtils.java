@@ -48,7 +48,7 @@ public class RetrofitUtils {
      * @param serviceClass
      * @return
      */
-    public <T> T creatBaseApi(Class<T> serviceClass) {
+    public static <T> T creatBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
@@ -68,7 +68,7 @@ public class RetrofitUtils {
      * @param serviceClass
      * @return serviceClass
      */
-    public <T> T creatNewBaseApi(Class<T> serviceClass) {
+    public static <T> T creatNewBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
             retrofit = new Retrofit.Builder()
