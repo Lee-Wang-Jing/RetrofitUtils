@@ -24,7 +24,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * 最近修改：2018/4/16 16:09 by WangJing
  */
 public class RetrofitUtils {
-    private static RetrofitConfig retrofitConfig;
+    private static RetrofitBuilder retrofitBuilder;
     private static Retrofit retrofit;
     private static OkHttpClient.Builder okhttpBuilder;
     private static HttpLoggingInterceptor interceptor;
@@ -32,11 +32,11 @@ public class RetrofitUtils {
     /**
      * 初始化
      *
-     * @param config  RetrofitConfig
+     * @param retrofitBuilder  RetrofitBuilder
      */
-    public static void initialize(RetrofitConfig config) {
-        retrofitConfig = config;
-        Log.e("RetrofitUtils","RetrofitUtils初始化成功==》"+retrofitConfig.getBaseUrl());
+    public static void initialize(RetrofitBuilder retrofitBuilder) {
+        retrofitBuilder = retrofitBuilder;
+        Log.e("RetrofitUtils","RetrofitUtils初始化成功==》"+retrofitBuilder.getBaseUrl());
     }
 
 
@@ -50,7 +50,7 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl("" + retrofitConfig.getBaseUrl())
+                        .baseUrl("" + retrofitBuilder.getBaseUrl())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .client(getHttpClient())
@@ -70,7 +70,7 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             clearAll();
             retrofit = new Retrofit.Builder()
-                    .baseUrl("" + retrofitConfig.getBaseUrl())
+                    .baseUrl("" + retrofitBuilder.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .client(getHttpClient())
@@ -135,9 +135,9 @@ public class RetrofitUtils {
             if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
                 //设置超时
-                okhttpBuilder.connectTimeout(retrofitConfig.getConnectTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.readTimeout(retrofitConfig.getReadTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.writeTimeout(retrofitConfig.getWriteTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.connectTimeout(retrofitBuilder.getConnectTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.readTimeout(retrofitBuilder.getReadTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.writeTimeout(retrofitBuilder.getWriteTimeout(), TimeUnit.SECONDS);
                 //错误重连
                 okhttpBuilder.retryOnConnectionFailure(true);
                 //设置请求头Header
@@ -148,7 +148,7 @@ public class RetrofitUtils {
                         //.addHeader(String name, String value) 不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
                         //.header(String name, String value) 会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
                         Request.Builder builder = chain.request().newBuilder();
-                        HashMap<String, String> headerHashMap = retrofitConfig.getHeaderHashMap();
+                        HashMap<String, String> headerHashMap = retrofitBuilder.getHeaderHashMap();
                         if (headerHashMap != null && headerHashMap.size() > 0) {
                             Set<String> keys = headerHashMap.keySet();
                             if (keys != null && keys.size() > 0) {
@@ -211,7 +211,7 @@ public class RetrofitUtils {
         }
     }
 
-    public static RetrofitConfig getRetrofitConfig() {
-        return retrofitConfig;
+    public static RetrofitBuilder getRetrofitBuilder() {
+        return retrofitBuilder;
     }
 }
