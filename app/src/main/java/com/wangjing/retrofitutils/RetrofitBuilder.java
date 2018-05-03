@@ -22,6 +22,9 @@ public class RetrofitBuilder {
     private HashMap<String, String> headerHashMap;
     private boolean isDebug;
 
+    private RetrofitBuilder() {
+    }
+
     public String getBaseUrl() {
         return baseUrl;
     }
@@ -48,6 +51,34 @@ public class RetrofitBuilder {
 
     public boolean isDebug() {
         return isDebug;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    public void setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
+
+    public void setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+    }
+
+    public void setWriteTimeout(int writeTimeout) {
+        this.writeTimeout = writeTimeout;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public void setHeaderHashMap(HashMap<String, String> headerHashMap) {
+        this.headerHashMap = headerHashMap;
+    }
+
+    public void setDebug(boolean debug) {
+        isDebug = debug;
     }
 
     public static class Builder {

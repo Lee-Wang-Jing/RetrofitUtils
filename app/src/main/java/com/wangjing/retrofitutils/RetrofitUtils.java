@@ -1,6 +1,5 @@
 package com.wangjing.retrofitutils;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -32,11 +31,11 @@ public class RetrofitUtils {
     /**
      * 初始化
      *
-     * @param retrofitBuilder  RetrofitBuilder
+     * @param builder RetrofitBuilder
      */
-    public static void initialize(RetrofitBuilder retrofitBuilder) {
-        retrofitBuilder = retrofitBuilder;
-        Log.e("RetrofitUtils","RetrofitUtils初始化成功==》"+retrofitBuilder.getBaseUrl());
+    public static void initialize(RetrofitBuilder builder) {
+        retrofitBuilder = builder;
+        Log.e("RetrofitUtils", "RetrofitUtils初始化成功==》" + retrofitBuilder.getBaseUrl());
     }
 
 
@@ -196,7 +195,7 @@ public class RetrofitUtils {
 //                okhttpBuilder.cache(cache).addInterceptor(cacheInterceptor);
             }
 
-            if (BuildConfig.DEBUG) {
+            if (retrofitBuilder.isDebug()) {
                 // Log信息拦截器
                 if (interceptor == null) {
                     interceptor = new HttpLoggingInterceptor();
@@ -211,7 +210,16 @@ public class RetrofitUtils {
         }
     }
 
+    /**
+     * 获取RetrofitBuilder，如果为null，则新建一个空的
+     * @return
+     */
     public static RetrofitBuilder getRetrofitBuilder() {
-        return retrofitBuilder;
+        if (retrofitBuilder != null) {
+            return retrofitBuilder;
+        } else {
+            retrofitBuilder = new RetrofitBuilder.Builder().builder();
+            return retrofitBuilder;
+        }
     }
 }
