@@ -4,6 +4,23 @@
 有问题或者某种需求欢迎加群或者提issues，Thanks
 RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 
+# Dependencies
+* Gradle
+```groovy
+compile 'com.wangjing:retrofitutils:0.0.13'
+```
+* Maven
+```xml
+<dependency>
+  <groupId>com.wangjing</groupId>
+  <artifactId>retrofitutils</artifactId>
+  <version>0.0.13</version>
+  <type>pom</type>
+</dependency>
+```
+
+* Eclipse ADT请放弃治疗
+
 - **初始化 RetrofitUtils**
 
 ```
