@@ -49,7 +49,7 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl("" + retrofitBuilder.getBaseUrl())
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .client(getHttpClient())
@@ -69,7 +69,7 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             clearAll();
             retrofit = new Retrofit.Builder()
-                    .baseUrl("" + retrofitBuilder.getBaseUrl())
+                    .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .client(getHttpClient())
@@ -134,9 +134,9 @@ public class RetrofitUtils {
             if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
                 //设置超时
-                okhttpBuilder.connectTimeout(retrofitBuilder.getConnectTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.readTimeout(retrofitBuilder.getReadTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.writeTimeout(retrofitBuilder.getWriteTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
                 //错误重连
                 okhttpBuilder.retryOnConnectionFailure(true);
                 //设置请求头Header
@@ -147,7 +147,7 @@ public class RetrofitUtils {
                         //.addHeader(String name, String value) 不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
                         //.header(String name, String value) 会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
                         Request.Builder builder = chain.request().newBuilder();
-                        HashMap<String, String> headerHashMap = retrofitBuilder.getHeaderHashMap();
+                        HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeaderHashMap();
                         if (headerHashMap != null && headerHashMap.size() > 0) {
                             Set<String> keys = headerHashMap.keySet();
                             if (keys != null && keys.size() > 0) {
@@ -195,7 +195,7 @@ public class RetrofitUtils {
 //                okhttpBuilder.cache(cache).addInterceptor(cacheInterceptor);
             }
 
-            if (retrofitBuilder.isDebug()) {
+            if (getRetrofitBuilder().isDebug()) {
                 // Log信息拦截器
                 if (interceptor == null) {
                     interceptor = new HttpLoggingInterceptor();

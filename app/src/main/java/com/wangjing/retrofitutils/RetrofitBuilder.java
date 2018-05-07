@@ -1,5 +1,7 @@
 package com.wangjing.retrofitutils;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 
 /**
@@ -17,7 +19,6 @@ public class RetrofitBuilder {
     private int connectTimeout;
     private int readTimeout;
     private int writeTimeout;
-    private String userAgent;
     //headerHashMap header的键值对集合
     private HashMap<String, String> headerHashMap;
     private boolean isDebug;
@@ -26,7 +27,7 @@ public class RetrofitBuilder {
     }
 
     public String getBaseUrl() {
-        return baseUrl;
+        return TextUtils.isEmpty(baseUrl) ? "" : baseUrl;
     }
 
     public int getConnectTimeout() {
@@ -41,11 +42,11 @@ public class RetrofitBuilder {
         return writeTimeout;
     }
 
-    public String getUserAgent() {
-        return userAgent;
-    }
 
     public HashMap<String, String> getHeaderHashMap() {
+        if (headerHashMap == null) {
+            headerHashMap = new HashMap<>();
+        }
         return headerHashMap;
     }
 
@@ -67,10 +68,6 @@ public class RetrofitBuilder {
 
     public void setWriteTimeout(int writeTimeout) {
         this.writeTimeout = writeTimeout;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
     }
 
     public void setHeaderHashMap(HashMap<String, String> headerHashMap) {
@@ -170,7 +167,6 @@ public class RetrofitBuilder {
         connectTimeout = b.connectTimeout;
         readTimeout = b.readTimeout;
         writeTimeout = b.writeTimeout;
-        userAgent = b.userAgent;
         headerHashMap = b.headerHashMap;
         isDebug = b.isDebug;
     }
