@@ -156,8 +156,6 @@ public class RetrofitUtils {
                                 }
                             }
                         }
-                        builder.build();
-
                         return chain.proceed(builder.build());
                     }
                 });

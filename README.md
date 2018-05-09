@@ -18,6 +18,33 @@ compile 'com.wangjing:retrofitutils:0.0.13'
   <type>pom</type>
 </dependency>
 ```
+* ProGuard
+
+```xml
+# Retain generic type information for use by reflection by converters and adapters.
+-keepattributes Signature
+# Retain service method parameters.
+-keepclassmembernames,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+```
+您可能还需要OKHTTP和OKIO的规则，这些规则是依赖关系。
+
+* OkHttp ProGuard
+```xml
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+```
+* OKIO ProGuard
+```xml
+-dontwarn okio.**
+```
 
 * Eclipse ADT请放弃治疗
 
