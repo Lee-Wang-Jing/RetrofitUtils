@@ -43,8 +43,8 @@ public class RetrofitUtils {
     /**
      * 创建带有默认BaseUrl的serviceClass
      *
-     * @param serviceClass
-     * @return
+     * @param serviceClass serviceClass
+     * @return <T>
      */
     public static <T> T creatBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
@@ -63,7 +63,7 @@ public class RetrofitUtils {
     /**
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的
      *
-     * @param serviceClass
+     * @param serviceClass serviceClass
      * @return serviceClass
      */
     public static <T> T creatNewBaseApi(Class<T> serviceClass) {
@@ -83,7 +83,7 @@ public class RetrofitUtils {
      * 创建不带有默认BaseUrl的serviceClass，记住使用了creatNoBaseUrlApi方法后如果再次使用creatBaseApi是无效的，因为retrofit不为null，需要clearRetrofit
      *
      * @param serviceClass serviceClass
-     * @return
+     * @return <T>
      */
     public static <T> T creatNoBaseUrlApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
