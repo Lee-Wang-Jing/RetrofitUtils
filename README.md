@@ -60,7 +60,9 @@ RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
         .connectTimeout(30)//设置connectTimeout
         .writeTimeout(30)//设置writeTimeout
         .readTimeout(30)//设置readTimeout
-        .headerHashMap(headerHashMap)//设置网络请求通用的Header
+        .headerHashMap(headerHashMap)//设置网络请求通用的Header，会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
+        .addHeaderHashMap(addHeaderHashMap)//不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
+        .headersHashMap(headersHashMap)//会移除所有的Header然后添加新的设置的所有的Headers
         .setDebug(true)//设置是否是debug模式，debug模式则会输出日志
         .builder();
 
