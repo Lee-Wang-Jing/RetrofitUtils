@@ -166,6 +166,35 @@ try {
     
 - @Body
     - 相当于多个@Field，以对象的形式提交
+
+#### 添加动态、静态添加Header
+- @Header
+    -  动态添加Header
+    ```
+    @GET("/")
+    Call<ResponseBody> foo(@Header("Accept-Language") String lang);
+    ```  
+- @HeaderMap 
+    - 动态添加HeaderMap
+    
+    ```
+    @GET("/search")
+    Call<ResponseBody> list(@HeaderMap Map<String, String> headers);
+    ```
+##### 静态添加
+
+```
+@Headers("Cache-Control: max-age=640000")
+@GET("/tasks")
+Call<List<Task>> getDataList();
+
+@Headers({
+    "X-Foo: Bar",
+    "X-Ping: Pong"
+})
+@GET("/")
+Call(ResponseBody) getData(@Query("id") String id);
+```
         
 ## **Tips** 
 - Tip1  

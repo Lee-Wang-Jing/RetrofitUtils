@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -146,13 +147,33 @@ public class RetrofitUtils {
                         //.headers(Headers headers) 会移除所有的Header然后添加新的设置的所有的Headers
                         //.addHeader(String name, String value) 不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
                         //.header(String name, String value) 会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
+                        //如果同时设置了 headerHashMap、addHeaderHashMap和headersHashMap
+                        //则优先顺序为 headersHashMap--headerHashMap--addHeaderHashMap 只会设置一种
                         Request.Builder builder = chain.request().newBuilder();
-                        HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeaderHashMap();
-                        if (headerHashMap != null && headerHashMap.size() > 0) {
+                        HashMap<String, String> headersHashMap = getRetrofitBuilder().getHeadersHashMap();
+                        HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeadersHashMap();
+                        HashMap<String, String> addHeaderHashMap = getRetrofitBuilder().getAddHeaderHashMap();
+                        if (headersHashMap != null && headersHashMap.size() > 0) {
+                            Set<String> keys = headersHashMap.keySet();
+                            if (keys != null && keys.size() > 0) {
+                                Headers.Builder headersBuilder = new Headers.Builder();
+                                for (String key : keys) {
+                                    headersBuilder.set(key, headersBuilder.get(key));
+                                }
+                                builder.headers(headersBuilder.build());
+                            }
+                        } else if (headerHashMap != null && headerHashMap.size() > 0) {
                             Set<String> keys = headerHashMap.keySet();
                             if (keys != null && keys.size() > 0) {
                                 for (String key : keys) {
                                     builder.header("" + key, "" + headerHashMap.get(key));
+                                }
+                            }
+                        } else if (addHeaderHashMap != null && addHeaderHashMap.size() > 0) {
+                            Set<String> keys = addHeaderHashMap.keySet();
+                            if (keys != null && keys.size() > 0) {
+                                for (String key : keys) {
+                                    builder.header("" + key, "" + addHeaderHashMap.get(key));
                                 }
                             }
                         }
@@ -210,6 +231,7 @@ public class RetrofitUtils {
 
     /**
      * 获取RetrofitBuilder，如果为null，则新建一个空的
+     *
      * @return
      */
     public static RetrofitBuilder getRetrofitBuilder() {
