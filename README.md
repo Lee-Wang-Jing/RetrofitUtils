@@ -69,6 +69,10 @@ RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
 RetrofitUtils.initialize(retrofitBuilder);
 ```
 
+    如果同时设置了 headerHashMap、addHeaderHashMap和headersHashMap
+    则优先顺序为 headersHashMap--headerHashMap--addHeaderHashMap
+    只会设置一种
+
 - **如何使用 How to use**
 
 ```
