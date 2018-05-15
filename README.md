@@ -14,7 +14,7 @@ compile 'com.wangjing:retrofitutils:0.0.16'
 <dependency>
   <groupId>com.wangjing</groupId>
   <artifactId>retrofitutils</artifactId>
-  <version>0.0.13</version>
+  <version>0.0.16</version>
   <type>pom</type>
 </dependency>
 ```
