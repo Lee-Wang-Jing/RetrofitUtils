@@ -7,14 +7,14 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-compile 'com.wangjing:retrofitutils:0.0.13'
+compile 'com.wangjing:retrofitutils:0.0.16'
 ```
 * Maven
 ```xml
 <dependency>
   <groupId>com.wangjing</groupId>
   <artifactId>retrofitutils</artifactId>
-  <version>0.0.13</version>
+  <version>0.0.16</version>
   <type>pom</type>
 </dependency>
 ```
