@@ -7,7 +7,7 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-compile 'com.wangjing:retrofitutils:0.0.16'
+implementation 'com.wangjing:retrofitutils:0.0.16'
 ```
 * Maven
 ```xml
@@ -18,28 +18,36 @@ compile 'com.wangjing:retrofitutils:0.0.16'
   <type>pom</type>
 </dependency>
 ```
-* ProGuard
+* Retrofit2 ProGuard
 
 ```xml
-# Retain generic type information for use by reflection by converters and adapters.
--keepattributes Signature
-# Retain service method parameters.
--keepclassmembernames,allowobfuscation interface * {
+# Retrofit does reflection on generic parameters and InnerClass is required to use Signature.
+-keepattributes Signature, InnerClasses
+# Retain service method parameters when optimizing.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.-KotlinExtensions
 ```
 您可能还需要OKHTTP和OKIO的规则，这些规则是依赖关系。
 
-* OkHttp ProGuard
+* OkHttp3 ProGuard
 ```xml
--dontwarn okhttp3.**
--dontwarn okio.**
+# JSR 305 annotations are for embedding nullability information.
 -dontwarn javax.annotation.**
--dontwarn org.conscrypt.**
 # A resource is loaded with a relative path so the package of this class must be preserved.
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+# OkHttp platform used only on JVM and when Conscrypt dependency is available.
+-dontwarn okhttp3.internal.platform.ConscryptPlatform
 ```
 * OKIO ProGuard
 ```xml
