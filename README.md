@@ -1,13 +1,15 @@
 # RetrofitUtils [![](https://ci.novoda.com/buildStatus/icon?job=bintray-release)](https://ci.novoda.com/job/bintray-release/lastBuild/console) [![Download](https://api.bintray.com/packages/wangjinggm/maven/retrofitutils/images/download.svg) ](https://bintray.com/wangjinggm/maven/retrofitutils/_latestVersion) [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/Lee-Wang-Jing/RetrofitUtils/blob/master/LICENSE)
 
 技术交流群：598627802，加群前请务必阅读[群行为规范](https://github.com/Lee-Wang-Jing/GroupStandard)
+
 有问题或者某种需求欢迎加群或者提issues，Thanks
+
 RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 
 # Dependencies
 * Gradle
 ```groovy
-implementation 'com.wangjing:retrofitutils:0.0.16'
+implementation 'com.wangjing:retrofitutils:0.0.17'
 ```
 * Maven
 ```xml
@@ -20,7 +22,7 @@ implementation 'com.wangjing:retrofitutils:0.0.16'
 ```
 * Retrofit2 ProGuard
 
-```xml
+```
 # Retrofit does reflection on generic parameters and InnerClass is required to use Signature.
 -keepattributes Signature, InnerClasses
 # Retain service method parameters when optimizing.
@@ -39,7 +41,7 @@ implementation 'com.wangjing:retrofitutils:0.0.16'
 您可能还需要OKHTTP和OKIO的规则，这些规则是依赖关系。
 
 * OkHttp3 ProGuard
-```xml
+```
 # JSR 305 annotations are for embedding nullability information.
 -dontwarn javax.annotation.**
 # A resource is loaded with a relative path so the package of this class must be preserved.
@@ -50,7 +52,7 @@ implementation 'com.wangjing:retrofitutils:0.0.16'
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
 ```
 * OKIO ProGuard
-```xml
+```
 -dontwarn okio.**
 ```
 
@@ -222,6 +224,16 @@ Call<List<Activity>> getActivityList(
 Call<List<Activity>> call = service.getActivityList(
             "http://115.159.198.162:3001/api/ActivitySubjects", map);
 ```
+
+### 版本树
+- 1.0.1版本发布 - 2018年9月18日
+    - 增加GsonUtils相关方法，方便使用
+- 0.1.17版本发布
+    - 升级'com.squareup.okhttp3:logging-interceptor:3.10.0' to 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+
+
+
 
 # License
 ```text
