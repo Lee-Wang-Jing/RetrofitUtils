@@ -9,14 +9,14 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-implementation 'com.wangjing:retrofitutils:0.0.17'
+implementation 'com.wangjing:retrofitutils:1.0.2'
 ```
 * Maven
 ```xml
 <dependency>
   <groupId>com.wangjing</groupId>
   <artifactId>retrofitutils</artifactId>
-  <version>0.0.16</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -226,6 +226,8 @@ Call<List<Activity>> call = service.getActivityList(
 ```
 
 ### 版本树
+- 1.0.2版本发布 - 2018年9月19日
+    - 增加JsonString转成JsonObject方法
 - 1.0.1版本发布 - 2018年9月18日
     - 增加GsonUtils相关方法，方便使用
 - 0.1.17版本发布

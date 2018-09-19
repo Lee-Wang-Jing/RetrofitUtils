@@ -1,8 +1,14 @@
 package com.wangjing.retrofitutils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,10 +77,21 @@ public class GsonUtils {
     }
 
     /**
+     * JsonString转成JsonObject
+     *
+     * @param json String
+     * @return JSONObject
+     */
+    public static JsonObject gsonToJsonObject(String json) {
+        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+        return jsonObject;
+    }
+
+    /**
      * String转成list中有map的
      *
      * @param gsonString String
-     * @return List<Map<String, T>>
+     * @return List<Map < String ,   T>>
      */
     public static <T> List<Map<String, T>> gsonToListMaps(String gsonString) {
         List<Map<String, T>> list = null;
@@ -90,7 +107,7 @@ public class GsonUtils {
      * String转成Map的
      *
      * @param gsonString String
-     * @return Map<String, T>
+     * @return Map<String ,   T>
      */
     public static <T> Map<String, T> gsonToMaps(String gsonString) {
         Map<String, T> map = null;
@@ -100,4 +117,6 @@ public class GsonUtils {
         }
         return map;
     }
+
+
 }
