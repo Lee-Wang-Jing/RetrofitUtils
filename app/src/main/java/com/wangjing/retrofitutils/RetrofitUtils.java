@@ -154,7 +154,7 @@ public class RetrofitUtils {
                         //则优先顺序为 headersHashMap--headerHashMap--addHeaderHashMap 只会设置一种
                         Request.Builder builder = chain.request().newBuilder();
                         HashMap<String, String> headersHashMap = getRetrofitBuilder().getHeadersHashMap();
-                        HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeadersHashMap();
+                        HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeaderHashMap();
                         HashMap<String, String> addHeaderHashMap = getRetrofitBuilder().getAddHeaderHashMap();
                         if (headersHashMap != null && headersHashMap.size() > 0) {
                             Set<String> keys = headersHashMap.keySet();
