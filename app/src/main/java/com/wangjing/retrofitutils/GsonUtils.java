@@ -34,7 +34,7 @@ public class GsonUtils {
      * @param object 对象
      * @return String
      */
-    public static String gsonToString(Object object) {
+    public String gsonToString(Object object) {
         String gsonString = null;
         if (gson != null) {
             gsonString = gson.toJson(object);
@@ -49,7 +49,7 @@ public class GsonUtils {
      * @param cls        Class
      * @return bean对象
      */
-    public static <T> T gsonToBean(String gsonString, Class<T> cls) {
+    public <T> T gsonToBean(String gsonString, Class<T> cls) {
         T t = null;
         if (gson != null) {
             t = gson.fromJson(gsonString, cls);
@@ -64,7 +64,7 @@ public class GsonUtils {
      * @param cls        Class
      * @return List数组
      */
-    public static <T> List<T> gsonToList(String gsonString, Class<T> cls) {
+    public <T> List<T> gsonToList(String gsonString, Class<T> cls) {
         List<T> list = null;
         if (gson != null) {
             list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
@@ -79,7 +79,7 @@ public class GsonUtils {
      * @param json String
      * @return JSONObject
      */
-    public static JsonObject gsonToJsonObject(String json) {
+    public JsonObject gsonToJsonObject(String json) {
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
         return jsonObject;
     }
@@ -90,7 +90,7 @@ public class GsonUtils {
      * @param json Reader
      * @return JSONObject
      */
-    public static JsonObject gsonToJsonObject(JsonReader json) {
+    public JsonObject gsonToJsonObject(JsonReader json) {
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
         return jsonObject;
     }
@@ -99,9 +99,9 @@ public class GsonUtils {
      * String转成list中有map的
      *
      * @param gsonString String
-     * @return List<Map   <   String   ,       T>>
+     * @return List<Map       <       String       ,               T>>
      */
-    public static <T> List<Map<String, T>> gsonToListMaps(String gsonString) {
+    public <T> List<Map<String, T>> gsonToListMaps(String gsonString) {
         List<Map<String, T>> list = null;
         if (gson != null) {
             list = gson.fromJson(gsonString,
@@ -115,9 +115,9 @@ public class GsonUtils {
      * String转成Map的
      *
      * @param gsonString String
-     * @return Map<String   ,       T>
+     * @return Map<String       ,               T>
      */
-    public static <T> Map<String, T> gsonToMaps(String gsonString) {
+    public <T> Map<String, T> gsonToMaps(String gsonString) {
         Map<String, T> map = null;
         if (gson != null) {
             map = gson.fromJson(gsonString, new TypeToken<Map<String, T>>() {
