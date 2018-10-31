@@ -13,7 +13,7 @@ public class GsonUtils {
     private static volatile GsonUtils instance = null;
     private static Gson gson = null;
 
-    public GsonUtils getInstance() {
+    public static GsonUtils getInstance() {
         if (gson == null) {
             synchronized (GsonUtils.class) {
                 if (gson == null) {
