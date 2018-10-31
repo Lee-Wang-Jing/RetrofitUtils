@@ -34,10 +34,24 @@ public class GsonUtils {
      * @param object 对象
      * @return String
      */
-    public String gsonToString(Object object) {
+    public String gsonObjectToString(Object object) {
         String gsonString = null;
         if (gson != null) {
             gsonString = gson.toJson(object);
+        }
+        return gsonString;
+    }
+
+    /**
+     * List转成jsonString
+     *
+     * @param list 对象
+     * @return String
+     */
+    public String  gsonListToString(List<?> list) {
+        String gsonString = null;
+        if (gson != null) {
+            gsonString = gson.toJson(list);
         }
         return gsonString;
     }
