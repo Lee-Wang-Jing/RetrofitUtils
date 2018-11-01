@@ -42,19 +42,19 @@ public class GsonUtils {
         return gsonString;
     }
 
-    /**
-     * List转成jsonString
-     *
-     * @param list 对象
-     * @return String
-     */
-    public String  gsonListToString(List<?> list) {
-        String gsonString = null;
-        if (gson != null) {
-            gsonString = gson.toJson(list);
-        }
-        return gsonString;
-    }
+//    /**
+//     * List转成jsonString
+//     *
+//     * @param list 对象
+//     * @return String
+//     */
+//    public String  gsonListToString(List<?> list) {
+//        String gsonString = null;
+//        if (gson != null) {
+//            gsonString = gson.toJson(list);
+//        }
+//        return gsonString;
+//    }
 
     /**
      * String转成bean
