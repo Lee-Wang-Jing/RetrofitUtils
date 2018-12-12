@@ -226,7 +226,7 @@ Call<List<Activity>> call = service.getActivityList(
 ```
 
 ### 版本树
-- 1.1.1版本发布 - 2018年12月12日
+- 1.1.2版本发布 - 2018年12月12日
     - update logging-interceptor from 3.11.0 to 3.12.0
     - update retrofit frome 2.4.0 to 2.5.0
 - 1.0.2版本发布 - 2018年9月19日
