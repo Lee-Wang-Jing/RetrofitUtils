@@ -52,8 +52,8 @@ public class RetrofitUtils {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
                         .baseUrl("" + getRetrofitBuilder().getBaseUrl())
-                        .addConverterFactory(GsonConverterFactory.create())
                         .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
                         .client(getHttpClient())
                         .build();
             }
@@ -73,8 +73,8 @@ public class RetrofitUtils {
             clearAll();
             retrofit = new Retrofit.Builder()
                     .baseUrl("" + getRetrofitBuilder().getBaseUrl())
-                    .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .client(getHttpClient())
                     .build();
             return retrofit.create(serviceClass);
