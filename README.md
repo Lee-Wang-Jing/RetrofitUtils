@@ -1,4 +1,4 @@
-# RetrofitUtils [![](https://ci.novoda.com/buildStatus/icon?job=bintray-release)](https://ci.novoda.com/job/bintray-release/lastBuild/console) [![Download](https://api.bintray.com/packages/wangjinggm/maven/retrofitutils/images/download.svg) ](https://bintray.com/wangjinggm/maven/retrofitutils/_latestVersion) [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/Lee-Wang-Jing/RetrofitUtils/blob/master/LICENSE)
+# RetrofitUtils [![](https://jitpack.io/v/Lee-Wang-Jing/RetrofitUtils.svg)](https://jitpack.io/#Lee-Wang-Jing/RetrofitUtils) [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/Lee-Wang-Jing/RetrofitUtils/blob/master/LICENSE)
 
 技术交流群：598627802，加群前请务必阅读[群行为规范](https://github.com/Lee-Wang-Jing/GroupStandard)
 
@@ -9,14 +9,14 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-implementation 'com.wangjing:retrofitutils:1.0.2'
+implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.1.2'
 ```
 * Maven
 ```xml
 <dependency>
-  <groupId>com.wangjing</groupId>
-  <artifactId>retrofitutils</artifactId>
-  <version>1.0.2</version>
+  <groupId>com.github.Lee-Wang-Jing</groupId>
+  <artifactId>RetrofitUtils</artifactId>
+  <version>1.1.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -226,6 +226,9 @@ Call<List<Activity>> call = service.getActivityList(
 ```
 
 ### 版本树
+- 1.1.1版本发布 - 2018年12月12日
+    - update logging-interceptor from 3.11.0 to 3.12.0
+    - update retrofit frome 2.4.0 to 2.5.0
 - 1.0.2版本发布 - 2018年9月19日
     - 增加JsonString转成JsonObject方法
 - 1.0.1版本发布 - 2018年9月18日
