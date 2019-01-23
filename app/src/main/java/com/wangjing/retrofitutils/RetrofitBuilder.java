@@ -26,6 +26,8 @@ public class RetrofitBuilder {
 
     private boolean isDebug;
 
+    private boolean isTrustSSL = false;
+
     private RetrofitBuilder() {
     }
 
@@ -103,6 +105,14 @@ public class RetrofitBuilder {
         isDebug = debug;
     }
 
+    public boolean isTrustSSL() {
+        return isTrustSSL;
+    }
+
+    public void setTrustSSL(boolean trustSSL) {
+        isTrustSSL = trustSSL;
+    }
+
     public static class Builder {
         /**
          * 请求的baseUrl
@@ -117,6 +127,7 @@ public class RetrofitBuilder {
         private HashMap<String, String> headersHashMap;
 
         private boolean isDebug;
+        private boolean isTrustSSL;
 
         /**
          * 设置请求的baseUrl
@@ -207,6 +218,17 @@ public class RetrofitBuilder {
             return this;
         }
 
+        /**
+         * 设置是否信任所有SSL证书
+         *
+         * @param isTrustSSL isTrustSSL
+         * @return Builder
+         */
+        public Builder setTrustSSL(boolean isTrustSSL) {
+            this.isDebug = isDebug;
+            return this;
+        }
+
         public RetrofitBuilder builder() {
             return new RetrofitBuilder(this);
         }
@@ -221,6 +243,7 @@ public class RetrofitBuilder {
         addHeaderHashMap = b.addHeaderHashMap;
         headersHashMap = b.headersHashMap;
         isDebug = b.isDebug;
+        isTrustSSL = b.isTrustSSL;
     }
 
 }
