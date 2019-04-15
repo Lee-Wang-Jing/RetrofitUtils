@@ -1,18 +1,22 @@
-Table of Contents
+Table of contents
 =================
+
 <!--ts-->
-      * [依赖](#依赖)
-      * [未进行封装的使用方法](#未进行封装的使用方法)
-         * [定义接口](#定义接口)
-         * [创建Retrofit实例](#创建retrofit实例)
-         * [执行请求](#执行请求)
-      * [封装对返回数据的处理](#封装对返回数据的处理)
-         * [使用Transform处理](#使用transform处理)
-            * [compose操作符](#compose操作符)
-            * [处理线程问题](#处理线程问题)
-            * [处理返回结果](#处理返回结果)
-            * [完整的一个请求](#完整的一个请求)
+   * [gh-md-toc](#gh-md-toc)
+   * [Table of contents](#table-of-contents)
+   * [Installation](#installation)
+   * [Usage](#usage)
+      * [STDIN](#stdin)
+      * [Local files](#local-files)
+      * [Remote files](#remote-files)
+      * [Multiple files](#multiple-files)
+      * [Combo](#combo)
+      * [Auto insert and update TOC](#auto-insert-and-update-toc)
+      * [Github token](#github-token)
+   * [Tests](#tests)
+   * [Dependency](#dependency)
 <!--te-->
+
 
 ## 依赖
 ```
