@@ -6,7 +6,7 @@
 
 RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 
-[RxJava结合版戳这里]()
+[RxJava结合版戳这里](https://github.com/Lee-Wang-Jing/RetrofitUtils/blob/master/rxjava.md)
 # Dependencies
 * Gradle
 ```groovy
