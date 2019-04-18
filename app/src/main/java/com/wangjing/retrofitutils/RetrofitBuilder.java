@@ -225,7 +225,7 @@ public class RetrofitBuilder {
          * @return Builder
          */
         public Builder setTrustSSL(boolean isTrustSSL) {
-            this.isDebug = isDebug;
+            this.isTrustSSL = isTrustSSL;
             return this;
         }
 
