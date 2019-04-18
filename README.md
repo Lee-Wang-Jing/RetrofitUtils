@@ -10,14 +10,14 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.1.4'
+implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.1.5'
 ```
 * Maven
 ```xml
 <dependency>
   <groupId>com.github.Lee-Wang-Jing</groupId>
   <artifactId>RetrofitUtils</artifactId>
-  <version>1.1.4</version>
+  <version>1.1.5</version>
   <type>pom</type>
 </dependency>
 ```
@@ -227,6 +227,8 @@ Call<List<Activity>> call = service.getActivityList(
 ```
 
 ### 版本树
+- 1.1.5版本发布 - 2019年4月18日
+    - implementation 修改成 api
 - 1.1.4版本发布 - 2019年1月23日
     - 针对https中SSL证书的问题，支持设置信任所有证书setTrustSSL，默认false
 - 1.1.3版本发布 - 2018年12月12日
