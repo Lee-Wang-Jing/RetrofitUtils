@@ -10,14 +10,14 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.1.7'
+implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.1.8'
 ```
 * Maven
 ```xml
 <dependency>
   <groupId>com.github.Lee-Wang-Jing</groupId>
   <artifactId>RetrofitUtils</artifactId>
-  <version>1.1.7</version>
+  <version>1.1.8</version>
   <type>pom</type>
 </dependency>
 ```
@@ -227,6 +227,8 @@ Call<List<Activity>> call = service.getActivityList(
 ```
 
 ### 版本树
+- 1.1.8版本发布 - 2019年6月1日
+    - 修复RetrofitUtils.initialize 二次初始化时 retrofit 和 okhttpBuilder 没有重置的bug
 - 1.1.7版本发布 - 2019年4月18日
     - 修复setTrustSSL 无效的bug
 - 1.1.6版本发布 - 2019年4月18日

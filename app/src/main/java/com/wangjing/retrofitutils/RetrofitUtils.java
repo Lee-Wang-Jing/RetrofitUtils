@@ -44,6 +44,7 @@ public class RetrofitUtils {
      * @param builder RetrofitBuilder
      */
     public static void initialize(RetrofitBuilder builder) {
+        clearAll();
         retrofitBuilder = builder;
         Log.e("RetrofitUtils", "RetrofitUtils初始化成功==》" + retrofitBuilder.getBaseUrl());
     }
