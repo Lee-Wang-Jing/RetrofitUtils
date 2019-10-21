@@ -2,6 +2,9 @@ package com.wangjing.retrofitutils;
 
 import android.util.Log;
 
+import com.wangjing.retrofitutils.adapter.LiveDataCallAdapter;
+import com.wangjing.retrofitutils.adapter.LiveDataCallAdapterFactory;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -64,6 +67,7 @@ public class RetrofitUtils {
                         .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                         .client(getHttpClient())
                         .build();
             }
@@ -85,6 +89,7 @@ public class RetrofitUtils {
                     .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .client(getHttpClient())
                     .build();
             return retrofit.create(serviceClass);
@@ -106,6 +111,7 @@ public class RetrofitUtils {
                     //设置 Json 转换器
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .client(getHttpClient())
                     .build();
             return retrofit.create(serviceClass);
