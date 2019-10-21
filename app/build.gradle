@@ -30,7 +30,7 @@ dependencies {
     //https://github.com/square/okhttp
     api 'com.squareup.okhttp3:logging-interceptor:3.14.4'
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
+    compileOnly 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
 
 }
 
