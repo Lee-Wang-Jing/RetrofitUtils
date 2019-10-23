@@ -37,7 +37,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class RetrofitUtils {
     private static RetrofitBuilder retrofitBuilder;
-    private static Retrofit retrofit;
     private static OkHttpClient.Builder okhttpBuilder;
     private static HttpLoggingInterceptor interceptor;
 
@@ -62,15 +61,12 @@ public class RetrofitUtils {
      */
     public static <T> T creatBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
-//            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(getHttpClient())
-                        .build();
-//            }
-            return retrofit.create(serviceClass);
+            return new Retrofit.Builder()
+                    .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(getHttpClient())
+                    .build().create(serviceClass);
         }
     }
 
@@ -83,16 +79,13 @@ public class RetrofitUtils {
      */
     public static <T> T creatBaseApiWithAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
-//            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(new LiveDataCallAdapterFactory())
-                        .client(getHttpClient())
-                        .build();
-//            }
-            return retrofit.create(serviceClass);
+            return new Retrofit.Builder()
+                    .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+                    .client(getHttpClient())
+                    .build().create(serviceClass);
         }
     }
 
@@ -106,13 +99,12 @@ public class RetrofitUtils {
     public static <T> T creatNewBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
-            retrofit = new Retrofit.Builder()
+            return new Retrofit.Builder()
                     .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getHttpClient())
-                    .build();
-            return retrofit.create(serviceClass);
+                    .build().create(serviceClass);
         }
     }
 
@@ -127,14 +119,13 @@ public class RetrofitUtils {
     public static <T> T creatNewBaseApiWithAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
-            retrofit = new Retrofit.Builder()
+            return new Retrofit.Builder()
                     .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .client(getHttpClient())
-                    .build();
-            return retrofit.create(serviceClass);
+                    .build().create(serviceClass);
         }
     }
 
@@ -150,13 +141,12 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             //如果refrofit不为null，则滞空，创建新的retrofit
             clearAll();
-            retrofit = new Retrofit.Builder()
+            return new Retrofit.Builder()
                     //设置 Json 转换器
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getHttpClient())
-                    .build();
-            return retrofit.create(serviceClass);
+                    .build().create(serviceClass);
         }
     }
 
@@ -171,23 +161,13 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             //如果refrofit不为null，则滞空，创建新的retrofit
             clearAll();
-            retrofit = new Retrofit.Builder()
+            return new Retrofit.Builder()
                     //设置 Json 转换器
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .client(getHttpClient())
-                    .build();
-            return retrofit.create(serviceClass);
-        }
-    }
-
-    /**
-     * 清空Retrofit
-     */
-    public static void clearRetrofit() {
-        if (retrofit != null) {
-            retrofit = null;
+                    .build().create(serviceClass);
         }
     }
 
@@ -204,7 +184,6 @@ public class RetrofitUtils {
      * 清空Retrofit和okhttpBuilder
      */
     public static synchronized void clearAll() {
-        clearRetrofit();
         clearOkhttpBuilder();
     }
 
