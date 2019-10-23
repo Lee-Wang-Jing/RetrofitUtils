@@ -62,7 +62,28 @@ public class RetrofitUtils {
      */
     public static <T> T creatBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
-            if (retrofit == null) {
+//            if (retrofit == null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(getHttpClient())
+                        .build();
+//            }
+            return retrofit.create(serviceClass);
+        }
+    }
+
+    /**
+     * 创建带有默认BaseUrl的serviceClass，并且含有LiveDataCallAdapterFactory
+     *
+     * @param serviceClass serviceClass
+     * @param <T>          泛型
+     * @return <T> 泛型
+     */
+    public static <T> T creatBaseApiWithAdapter(Class<T> serviceClass) {
+        synchronized (RetrofitUtils.class) {
+//            if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
                         .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                         .addConverterFactory(ScalarsConverterFactory.create())
@@ -70,7 +91,7 @@ public class RetrofitUtils {
                         .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                         .client(getHttpClient())
                         .build();
-            }
+//            }
             return retrofit.create(serviceClass);
         }
     }
@@ -89,12 +110,34 @@ public class RetrofitUtils {
                     .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
+                    .client(getHttpClient())
+                    .build();
+            return retrofit.create(serviceClass);
+        }
+    }
+
+
+    /**
+     * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有LiveDataCallAdapterFactory
+     *
+     * @param serviceClass serviceClass
+     * @param <T>          泛型
+     * @return serviceClass
+     */
+    public static <T> T creatNewBaseApiWithAdapter(Class<T> serviceClass) {
+        synchronized (RetrofitUtils.class) {
+            clearAll();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .client(getHttpClient())
                     .build();
             return retrofit.create(serviceClass);
         }
     }
+
 
     /**
      * 创建不带有默认BaseUrl的serviceClass，记住使用了creatNoBaseUrlApi方法后如果再次使用creatBaseApi是无效的，因为retrofit不为null，需要clearRetrofit
@@ -104,6 +147,27 @@ public class RetrofitUtils {
      * @return <T> 泛型
      */
     public static <T> T creatNoBaseUrlApi(Class<T> serviceClass) {
+        synchronized (RetrofitUtils.class) {
+            //如果refrofit不为null，则滞空，创建新的retrofit
+            clearAll();
+            retrofit = new Retrofit.Builder()
+                    //设置 Json 转换器
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(getHttpClient())
+                    .build();
+            return retrofit.create(serviceClass);
+        }
+    }
+
+    /**
+     * 创建不带有默认BaseUrl的serviceClass，记住使用了creatNoBaseUrlApi方法后如果再次使用creatBaseApi是无效的，因为retrofit不为null，需要clearRetrofit，并且含有LiveDataCallAdapterFactory
+     *
+     * @param serviceClass serviceClass
+     * @param <T>          泛型
+     * @return <T> 泛型
+     */
+    public static <T> T creatNoBaseUrlApiWithAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             //如果refrofit不为null，则滞空，创建新的retrofit
             clearAll();
