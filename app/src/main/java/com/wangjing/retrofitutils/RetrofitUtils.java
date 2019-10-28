@@ -202,46 +202,51 @@ public class RetrofitUtils {
                 okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
                 //错误重连
                 okhttpBuilder.retryOnConnectionFailure(true);
-                //设置请求头Header
-                okhttpBuilder.addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        //.headers(Headers headers) 会移除所有的Header然后添加新的设置的所有的Headers
-                        //.addHeader(String name, String value) 不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
-                        //.header(String name, String value) 会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
-                        //如果同时设置了 headerHashMap、addHeaderHashMap和headersHashMap
-                        //则优先顺序为 headersHashMap--headerHashMap--addHeaderHashMap 只会设置一种
-                        Request.Builder builder = chain.request().newBuilder();
-                        HashMap<String, String> headersHashMap = getRetrofitBuilder().getHeadersHashMap();
-                        HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeaderHashMap();
-                        HashMap<String, String> addHeaderHashMap = getRetrofitBuilder().getAddHeaderHashMap();
-                        if (headersHashMap != null && headersHashMap.size() > 0) {
-                            Set<String> keys = headersHashMap.keySet();
-                            if (keys != null && keys.size() > 0) {
-                                Headers.Builder headersBuilder = new Headers.Builder();
-                                for (String key : keys) {
-                                    headersBuilder.set(key, headersBuilder.get(key));
+                if (getRetrofitBuilder().getInterceptor() != null) {
+                    okhttpBuilder.addInterceptor(getRetrofitBuilder().getInterceptor());
+                } else {
+                    //设置请求头Header
+                    okhttpBuilder.addInterceptor(new Interceptor() {
+                        @Override
+                        public Response intercept(Chain chain) throws IOException {
+                            //.headers(Headers headers) 会移除所有的Header然后添加新的设置的所有的Headers
+                            //.addHeader(String name, String value) 不会移除现有的Header，即使相同的key的header存在，也不会移除或者覆盖，会新增一条新的key和value的header
+                            //.header(String name, String value) 会移除和当前设置的key相同的所有header，然后添加进当前设置的key value 的header
+                            //如果同时设置了 headerHashMap、addHeaderHashMap和headersHashMap
+                            //则优先顺序为 headersHashMap--headerHashMap--addHeaderHashMap 只会设置一种
+                            Request.Builder builder = chain.request().newBuilder();
+                            HashMap<String, String> headersHashMap = getRetrofitBuilder().getHeadersHashMap();
+                            HashMap<String, String> headerHashMap = getRetrofitBuilder().getHeaderHashMap();
+                            HashMap<String, String> addHeaderHashMap = getRetrofitBuilder().getAddHeaderHashMap();
+                            if (headersHashMap != null && headersHashMap.size() > 0) {
+                                Set<String> keys = headersHashMap.keySet();
+                                if (keys != null && keys.size() > 0) {
+                                    Headers.Builder headersBuilder = new Headers.Builder();
+                                    for (String key : keys) {
+                                        headersBuilder.set(key, headersBuilder.get(key));
+                                    }
+                                    builder.headers(headersBuilder.build());
                                 }
-                                builder.headers(headersBuilder.build());
-                            }
-                        } else if (headerHashMap != null && headerHashMap.size() > 0) {
-                            Set<String> keys = headerHashMap.keySet();
-                            if (keys != null && keys.size() > 0) {
-                                for (String key : keys) {
-                                    builder.header("" + key, "" + headerHashMap.get(key));
+                            } else if (headerHashMap != null && headerHashMap.size() > 0) {
+                                Set<String> keys = headerHashMap.keySet();
+                                if (keys != null && keys.size() > 0) {
+                                    for (String key : keys) {
+                                        builder.header("" + key, "" + headerHashMap.get(key));
+                                    }
+                                }
+                            } else if (addHeaderHashMap != null && addHeaderHashMap.size() > 0) {
+                                Set<String> keys = addHeaderHashMap.keySet();
+                                if (keys != null && keys.size() > 0) {
+                                    for (String key : keys) {
+                                        builder.header("" + key, "" + addHeaderHashMap.get(key));
+                                    }
                                 }
                             }
-                        } else if (addHeaderHashMap != null && addHeaderHashMap.size() > 0) {
-                            Set<String> keys = addHeaderHashMap.keySet();
-                            if (keys != null && keys.size() > 0) {
-                                for (String key : keys) {
-                                    builder.header("" + key, "" + addHeaderHashMap.get(key));
-                                }
-                            }
+                            return chain.proceed(builder.build());
                         }
-                        return chain.proceed(builder.build());
-                    }
-                });
+                    });
+                }
+
 //                //缓存机制,无网络时，也能显示数据
 //                File cacheFile = new File(MyApplication.getmContext().getExternalCacheDir(), "ZongHengCache");
 //                Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);//设置缓存大小50M
@@ -275,15 +280,17 @@ public class RetrofitUtils {
 //                };
 //                okhttpBuilder.cache(cache).addInterceptor(cacheInterceptor);
             }
-            if (getRetrofitBuilder().isTrustSSL()){
-                final TrustManager[] trustAllCerts = new TrustManager[] {
+            if (getRetrofitBuilder().isTrustSSL()) {
+                final TrustManager[] trustAllCerts = new TrustManager[]{
                         new X509TrustManager() {
                             @Override
                             public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
                             }
+
                             @Override
                             public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
                             }
+
                             @Override
                             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                                 return new java.security.cert.X509Certificate[]{};

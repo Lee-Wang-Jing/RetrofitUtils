@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
+import okhttp3.Interceptor;
+
 /**
  * 作者：Created by WangJing on 2018/4/17.
  * 邮箱：wangjinggm@gmail.com
@@ -23,6 +25,7 @@ public class RetrofitBuilder {
     private HashMap<String, String> headerHashMap;
     private HashMap<String, String> addHeaderHashMap;
     private HashMap<String, String> headersHashMap;
+    private Interceptor interceptor;
 
     private boolean isDebug;
 
@@ -113,6 +116,14 @@ public class RetrofitBuilder {
         isTrustSSL = trustSSL;
     }
 
+    public void setInterceptor(Interceptor interceptor) {
+        this.interceptor = interceptor;
+    }
+
+    public Interceptor getInterceptor() {
+        return interceptor;
+    }
+
     public static class Builder {
         /**
          * 请求的baseUrl
@@ -128,6 +139,8 @@ public class RetrofitBuilder {
 
         private boolean isDebug;
         private boolean isTrustSSL;
+
+        private Interceptor interceptor;
 
         /**
          * 设置请求的baseUrl
@@ -229,6 +242,16 @@ public class RetrofitBuilder {
             return this;
         }
 
+        /**
+         * 设置拦截器
+         * @param interceptor Interceptor
+         * @return Builder
+         */
+        public Builder setInterceptor(Interceptor interceptor) {
+            this.interceptor = interceptor;
+            return this;
+        }
+
         public RetrofitBuilder builder() {
             return new RetrofitBuilder(this);
         }
@@ -244,6 +267,7 @@ public class RetrofitBuilder {
         headersHashMap = b.headersHashMap;
         isDebug = b.isDebug;
         isTrustSSL = b.isTrustSSL;
+        interceptor = b.interceptor;
     }
 
 }
