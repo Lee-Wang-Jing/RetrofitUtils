@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import java.util.HashMap;
 
 import okhttp3.Interceptor;
+import retrofit2.Converter;
 
 /**
  * 作者：Created by WangJing on 2018/4/17.
@@ -26,6 +27,7 @@ public class RetrofitBuilder {
     private HashMap<String, String> addHeaderHashMap;
     private HashMap<String, String> headersHashMap;
     private Interceptor interceptor;
+    private Converter.Factory factory;
 
     private boolean isDebug;
 
@@ -82,6 +84,14 @@ public class RetrofitBuilder {
 
     public boolean isDebug() {
         return isDebug;
+    }
+
+    public Converter.Factory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(Converter.Factory factory) {
+        this.factory = factory;
     }
 
     public void setBaseUrl(String baseUrl) {
@@ -141,6 +151,7 @@ public class RetrofitBuilder {
         private boolean isTrustSSL;
 
         private Interceptor interceptor;
+        private Converter.Factory factory;
 
         /**
          * 设置请求的baseUrl
@@ -244,11 +255,23 @@ public class RetrofitBuilder {
 
         /**
          * 设置拦截器
+         *
          * @param interceptor Interceptor
          * @return Builder
          */
         public Builder setInterceptor(Interceptor interceptor) {
             this.interceptor = interceptor;
+            return this;
+        }
+
+        /**
+         * 支持自己设置ConverterFactory解析
+         *
+         * @param factory
+         * @return
+         */
+        public Builder setConverterFactory(Converter.Factory factory) {
+            this.factory = factory;
             return this;
         }
 
@@ -268,6 +291,7 @@ public class RetrofitBuilder {
         isDebug = b.isDebug;
         isTrustSSL = b.isTrustSSL;
         interceptor = b.interceptor;
+        factory = b.factory;
     }
 
 }
