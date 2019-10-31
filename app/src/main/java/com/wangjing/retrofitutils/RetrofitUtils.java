@@ -79,6 +79,34 @@ public class RetrofitUtils {
         }
     }
 
+
+    /**
+     * 创建带有默认BaseUrl的serviceClass
+     *
+     * @param serviceClass serviceClass
+     * @param <T>          泛型
+     * @return <T> 泛型
+     */
+    public static <T> T creatBaseApiWithUrl(Class<T> serviceClass,String url) {
+        synchronized (RetrofitUtils.class) {
+            if (getRetrofitBuilder().getFactory() != null) {
+                return new Retrofit.Builder()
+                        .baseUrl("" + url)
+                        .addConverterFactory(getRetrofitBuilder().getFactory())
+                        .client(getHttpClient())
+                        .build().create(serviceClass);
+            } else {
+                //默认使用GsonConverterFactory
+                return new Retrofit.Builder()
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(getHttpClient())
+                        .build().create(serviceClass);
+            }
+        }
+    }
+
     /**
      * 创建带有默认BaseUrl的serviceClass，并且含有LiveDataCallAdapterFactory
      *
