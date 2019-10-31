@@ -98,7 +98,7 @@ public class RetrofitUtils {
             } else {
                 //默认使用GsonConverterFactory
                 return new Retrofit.Builder()
-                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .baseUrl("" + url)
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(getHttpClient())
