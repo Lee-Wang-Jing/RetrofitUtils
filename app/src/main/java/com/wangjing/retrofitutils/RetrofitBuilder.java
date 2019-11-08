@@ -294,7 +294,7 @@ public class RetrofitBuilder {
          * @param sslSocketFactory
          * @return Builder
          */
-        public Builder setConverterFactory(SSLSocketFactory sslSocketFactory) {
+        public Builder setSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
             this.sslSocketFactory = sslSocketFactory;
             return this;
         }
