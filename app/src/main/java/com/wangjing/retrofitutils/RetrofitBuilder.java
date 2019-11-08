@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
+import javax.net.ssl.SSLSocketFactory;
+
 import okhttp3.Interceptor;
 import retrofit2.Converter;
 
@@ -28,6 +30,7 @@ public class RetrofitBuilder {
     private HashMap<String, String> headersHashMap;
     private Interceptor interceptor;
     private Converter.Factory factory;
+    private SSLSocketFactory sslSocketFactory;
 
     private boolean isDebug;
 
@@ -134,6 +137,14 @@ public class RetrofitBuilder {
         return interceptor;
     }
 
+    public SSLSocketFactory getSslSocketFactory() {
+        return sslSocketFactory;
+    }
+
+    public void setSslSocketFactory(SSLSocketFactory sslSocketFactory) {
+        this.sslSocketFactory = sslSocketFactory;
+    }
+
     public static class Builder {
         /**
          * 请求的baseUrl
@@ -152,6 +163,7 @@ public class RetrofitBuilder {
 
         private Interceptor interceptor;
         private Converter.Factory factory;
+        private SSLSocketFactory sslSocketFactory;
 
         /**
          * 设置请求的baseUrl
@@ -268,12 +280,25 @@ public class RetrofitBuilder {
          * 支持自己设置ConverterFactory解析
          *
          * @param factory
-         * @return
+         * @return Builder
          */
         public Builder setConverterFactory(Converter.Factory factory) {
             this.factory = factory;
             return this;
         }
+
+
+        /**
+         * 支持自己设置SSLSocketFactory
+         *
+         * @param sslSocketFactory
+         * @return Builder
+         */
+        public Builder setConverterFactory(SSLSocketFactory sslSocketFactory) {
+            this.sslSocketFactory = sslSocketFactory;
+            return this;
+        }
+
 
         public RetrofitBuilder builder() {
             return new RetrofitBuilder(this);
@@ -292,6 +317,7 @@ public class RetrofitBuilder {
         isTrustSSL = b.isTrustSSL;
         interceptor = b.interceptor;
         factory = b.factory;
+        sslSocketFactory=b.sslSocketFactory;
     }
 
 }
