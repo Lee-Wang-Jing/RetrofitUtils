@@ -3,10 +3,12 @@ package com.wangjing.retrofitutils;
 import android.text.TextUtils;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.net.ssl.SSLSocketFactory;
 
 import okhttp3.Interceptor;
+import okhttp3.Protocol;
 import retrofit2.Converter;
 
 /**
@@ -31,6 +33,8 @@ public class RetrofitBuilder {
     private Interceptor interceptor;
     private Converter.Factory factory;
     private SSLSocketFactory sslSocketFactory;
+
+    private List<Protocol> protocols;
 
     private boolean isDebug;
 
@@ -145,6 +149,14 @@ public class RetrofitBuilder {
         this.sslSocketFactory = sslSocketFactory;
     }
 
+    public List<Protocol> getProtocols() {
+        return protocols;
+    }
+
+    public void setProtocols(List<Protocol> protocols) {
+        this.protocols = protocols;
+    }
+
     public static class Builder {
         /**
          * 请求的baseUrl
@@ -164,6 +176,9 @@ public class RetrofitBuilder {
         private Interceptor interceptor;
         private Converter.Factory factory;
         private SSLSocketFactory sslSocketFactory;
+
+        private List<Protocol> protocols;
+
 
         /**
          * 设置请求的baseUrl
@@ -299,6 +314,17 @@ public class RetrofitBuilder {
             return this;
         }
 
+        /**
+         * 设置http请求协议
+         *
+         * @param protocols
+         * @return Builder
+         */
+        public Builder setProtocols(List<Protocol> protocols) {
+            this.protocols = protocols;
+            return this;
+        }
+
 
         public RetrofitBuilder builder() {
             return new RetrofitBuilder(this);
@@ -317,7 +343,8 @@ public class RetrofitBuilder {
         isTrustSSL = b.isTrustSSL;
         interceptor = b.interceptor;
         factory = b.factory;
-        sslSocketFactory=b.sslSocketFactory;
+        sslSocketFactory = b.sslSocketFactory;
+        protocols = b.protocols;
     }
 
 }

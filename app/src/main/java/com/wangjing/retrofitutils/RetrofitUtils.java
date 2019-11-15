@@ -8,6 +8,7 @@ import com.wangjing.retrofitutils.adapter.LiveDataCallAdapterFactory;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +23,7 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -281,6 +283,11 @@ public class RetrofitUtils {
                 okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
                 okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
                 okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
+                //设置Http 请求 协议
+                if (getRetrofitBuilder().getProtocols()!=null&&!getRetrofitBuilder().getProtocols().isEmpty()){
+                    okhttpBuilder.protocols(getRetrofitBuilder().getProtocols());
+                }
+
                 //错误重连
                 okhttpBuilder.retryOnConnectionFailure(true);
                 if (getRetrofitBuilder().getInterceptor() != null) {
