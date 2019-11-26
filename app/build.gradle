@@ -24,9 +24,9 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //https://github.com/square/retrofit
-    api 'com.squareup.retrofit2:retrofit:2.6.1'
-    api 'com.squareup.retrofit2:converter-gson:2.6.1'
-    api 'com.squareup.retrofit2:converter-scalars:2.6.1'
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
+    api 'com.squareup.retrofit2:converter-gson:2.6.2'
+    api 'com.squareup.retrofit2:converter-scalars:2.6.2'
     //https://github.com/square/okhttp
     api 'com.squareup.okhttp3:logging-interceptor:3.14.4'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
