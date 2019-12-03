@@ -363,6 +363,7 @@ public class RetrofitBuilder {
         factory = b.factory;
         sslSocketFactory = b.sslSocketFactory;
         protocols = b.protocols;
+        eventListenerFactory = b.eventListenerFactory;
     }
 
 }
