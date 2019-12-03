@@ -287,7 +287,9 @@ public class RetrofitUtils {
                 if (getRetrofitBuilder().getProtocols()!=null&&!getRetrofitBuilder().getProtocols().isEmpty()){
                     okhttpBuilder.protocols(getRetrofitBuilder().getProtocols());
                 }
-
+                if (getRetrofitBuilder().getEventListenerFactory()!=null){
+                    okhttpBuilder.eventListenerFactory(getRetrofitBuilder().getEventListenerFactory());
+                }
                 //错误重连
                 okhttpBuilder.retryOnConnectionFailure(true);
                 if (getRetrofitBuilder().getInterceptor() != null) {

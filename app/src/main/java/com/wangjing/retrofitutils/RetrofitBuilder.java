@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.net.ssl.SSLSocketFactory;
 
+import okhttp3.EventListener;
 import okhttp3.Interceptor;
 import okhttp3.Protocol;
 import retrofit2.Converter;
@@ -33,6 +34,7 @@ public class RetrofitBuilder {
     private Interceptor interceptor;
     private Converter.Factory factory;
     private SSLSocketFactory sslSocketFactory;
+    private EventListener.Factory eventListenerFactory;
 
     private List<Protocol> protocols;
 
@@ -157,6 +159,10 @@ public class RetrofitBuilder {
         this.protocols = protocols;
     }
 
+    public EventListener.Factory getEventListenerFactory() {
+        return eventListenerFactory;
+    }
+
     public static class Builder {
         /**
          * 请求的baseUrl
@@ -178,6 +184,8 @@ public class RetrofitBuilder {
         private SSLSocketFactory sslSocketFactory;
 
         private List<Protocol> protocols;
+
+        private EventListener.Factory eventListenerFactory;
 
 
         /**
@@ -322,6 +330,16 @@ public class RetrofitBuilder {
          */
         public Builder setProtocols(List<Protocol> protocols) {
             this.protocols = protocols;
+            return this;
+        }
+
+        /**
+         * 设置网络请求过程中的事件
+         * @param factory
+         * @return
+         */
+        public Builder setEventListenerFactory(EventListener.Factory factory){
+            this.eventListenerFactory = factory;
             return this;
         }
 
