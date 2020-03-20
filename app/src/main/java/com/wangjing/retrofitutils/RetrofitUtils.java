@@ -279,10 +279,6 @@ public class RetrofitUtils {
         synchronized (RetrofitUtils.class) {
             if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
-                //设置超时
-                okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
-                okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
                 //设置Http 请求 协议
                 if (getRetrofitBuilder().getProtocols()!=null&&!getRetrofitBuilder().getProtocols().isEmpty()){
                     okhttpBuilder.protocols(getRetrofitBuilder().getProtocols());
@@ -419,6 +415,10 @@ public class RetrofitUtils {
                 //设置Debug Log 模式
                 okhttpBuilder.addInterceptor(interceptor);
             }
+            //设置超时
+            okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
+            okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
+            okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
             //以上设置结束，才能build(),不然设置白搭
             OkHttpClient okHttpClient = okhttpBuilder.build();
             return okHttpClient;
