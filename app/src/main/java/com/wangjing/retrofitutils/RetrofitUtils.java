@@ -27,6 +27,7 @@ import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -89,7 +90,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return <T> 泛型
      */
-    public static <T> T creatBaseApiWithUrl(Class<T> serviceClass,String url) {
+    public static <T> T creatBaseApiWithUrl(Class<T> serviceClass, String url) {
         synchronized (RetrofitUtils.class) {
             if (getRetrofitBuilder().getFactory() != null) {
                 return new Retrofit.Builder()
@@ -164,6 +165,34 @@ public class RetrofitUtils {
         }
     }
 
+    /**
+     * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有自定义的CallAdapterFactory
+     *
+     * @param serviceClass serviceClass
+     * @param <T>          泛型
+     * @return serviceClass
+     */
+    public static <T> T creatNewBaseApiWithCustomAdapter(Class<T> serviceClass, CallAdapter.Factory callAdapterFactory) {
+        synchronized (RetrofitUtils.class) {
+            clearAll();
+            if (getRetrofitBuilder().getFactory() != null) {
+                return new Retrofit.Builder()
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .addConverterFactory(getRetrofitBuilder().getFactory())
+                        .addCallAdapterFactory(callAdapterFactory)
+                        .client(getHttpClient())
+                        .build().create(serviceClass);
+            } else {
+                return new Retrofit.Builder()
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(callAdapterFactory)
+                        .client(getHttpClient())
+                        .build().create(serviceClass);
+            }
+        }
+    }
 
     /**
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有LiveDataCallAdapterFactory
@@ -280,10 +309,10 @@ public class RetrofitUtils {
             if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
                 //设置Http 请求 协议
-                if (getRetrofitBuilder().getProtocols()!=null&&!getRetrofitBuilder().getProtocols().isEmpty()){
+                if (getRetrofitBuilder().getProtocols() != null && !getRetrofitBuilder().getProtocols().isEmpty()) {
                     okhttpBuilder.protocols(getRetrofitBuilder().getProtocols());
                 }
-                if (getRetrofitBuilder().getEventListenerFactory()!=null){
+                if (getRetrofitBuilder().getEventListenerFactory() != null) {
                     okhttpBuilder.eventListenerFactory(getRetrofitBuilder().getEventListenerFactory());
                 }
                 //错误重连
@@ -367,9 +396,9 @@ public class RetrofitUtils {
 //                okhttpBuilder.cache(cache).addInterceptor(cacheInterceptor);
             }
             if (getRetrofitBuilder().isTrustSSL()) {
-                if (getRetrofitBuilder().getSslSocketFactory()!=null){
+                if (getRetrofitBuilder().getSslSocketFactory() != null) {
                     okhttpBuilder.sslSocketFactory(getRetrofitBuilder().getSslSocketFactory());
-                }else{
+                } else {
                     final TrustManager[] trustAllCerts = new TrustManager[]{
                             new X509TrustManager() {
                                 @Override
