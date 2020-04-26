@@ -29,6 +29,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -172,14 +173,14 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return serviceClass
      */
-    public static <T> T creatNewBaseApiWithCustomAdapter(Class<T> serviceClass, CallAdapter.Factory callAdapterFactory) {
+    public static <T> T creatNewBaseApiWithRxAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
             if (getRetrofitBuilder().getFactory() != null) {
                 return new Retrofit.Builder()
                         .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                         .addConverterFactory(getRetrofitBuilder().getFactory())
-                        .addCallAdapterFactory(callAdapterFactory)
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .client(getHttpClient())
                         .build().create(serviceClass);
             } else {
@@ -187,7 +188,7 @@ public class RetrofitUtils {
                         .baseUrl("" + getRetrofitBuilder().getBaseUrl())
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(callAdapterFactory)
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .client(getHttpClient())
                         .build().create(serviceClass);
             }
