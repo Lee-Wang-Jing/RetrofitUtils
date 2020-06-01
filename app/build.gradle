@@ -25,14 +25,14 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //https://github.com/square/retrofit
     //2.6.1开始最低支持安卓5.0
-    api 'com.squareup.retrofit2:retrofit:2.6.0'
-    api 'com.squareup.retrofit2:converter-gson:2.6.0'
-    api 'com.squareup.retrofit2:converter-scalars:2.6.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
+    api 'com.squareup.retrofit2:retrofit:2.6.4'
+    api 'com.squareup.retrofit2:converter-gson:2.6.4'
+    api 'com.squareup.retrofit2:converter-scalars:2.6.4'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.4'
     //https://github.com/square/okhttp
     api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    compileOnly 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
+    compileOnly 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
 }
 
