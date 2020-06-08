@@ -165,6 +165,34 @@ public class RetrofitUtils {
             }
         }
     }
+    
+    /**
+     * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有自定义的CallAdapterFactory
+     *
+     * @param serviceClass serviceClass
+     * @param <T>          泛型
+     * @return serviceClass
+     */
+    public static <T> T creatBaseApiWithRxAdapter(Class<T> serviceClass) {
+        synchronized (RetrofitUtils.class) {       
+            if (getRetrofitBuilder().getFactory() != null) {
+                return new Retrofit.Builder()
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .addConverterFactory(getRetrofitBuilder().getFactory())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(getHttpClient())
+                        .build().create(serviceClass);
+            } else {
+                return new Retrofit.Builder()
+                        .baseUrl("" + getRetrofitBuilder().getBaseUrl())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(getHttpClient())
+                        .build().create(serviceClass);
+            }
+        }
+    }
 
     /**
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有自定义的CallAdapterFactory
