@@ -42,6 +42,8 @@ public class RetrofitBuilder {
 
     private boolean isTrustSSL = false;
 
+    private boolean isRetry = true;
+
     private RetrofitBuilder() {
     }
 
@@ -163,6 +165,14 @@ public class RetrofitBuilder {
         return eventListenerFactory;
     }
 
+    public boolean isRetry() {
+        return isRetry;
+    }
+
+    public void setRetry(boolean retry) {
+        isRetry = retry;
+    }
+
     public static class Builder {
         /**
          * 请求的baseUrl
@@ -186,6 +196,8 @@ public class RetrofitBuilder {
         private List<Protocol> protocols;
 
         private EventListener.Factory eventListenerFactory;
+
+        private boolean isRetry = true;
 
 
         /**
@@ -343,6 +355,11 @@ public class RetrofitBuilder {
             return this;
         }
 
+        public Builder setIsRetry(boolean isRetry){
+            this.isRetry = isRetry;
+            return this;
+        }
+
 
         public RetrofitBuilder builder() {
             return new RetrofitBuilder(this);
@@ -364,6 +381,7 @@ public class RetrofitBuilder {
         sslSocketFactory = b.sslSocketFactory;
         protocols = b.protocols;
         eventListenerFactory = b.eventListenerFactory;
+        isRetry = b.isRetry;
     }
 
 }

@@ -345,7 +345,6 @@ public class RetrofitUtils {
                     okhttpBuilder.eventListenerFactory(getRetrofitBuilder().getEventListenerFactory());
                 }
                 //错误重连
-                okhttpBuilder.retryOnConnectionFailure(true);
                 if (getRetrofitBuilder().getInterceptor() != null) {
                     okhttpBuilder.addInterceptor(getRetrofitBuilder().getInterceptor());
                 } else {
@@ -473,6 +472,7 @@ public class RetrofitUtils {
                 //设置Debug Log 模式
                 okhttpBuilder.addInterceptor(interceptor);
             }
+            okhttpBuilder.retryOnConnectionFailure(getRetrofitBuilder().isRetry());
             //设置超时
             okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
             okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
