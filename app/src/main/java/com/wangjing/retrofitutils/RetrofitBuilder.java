@@ -355,6 +355,11 @@ public class RetrofitBuilder {
             return this;
         }
 
+        /**
+         * 设置请求失败是否会重试
+         * @param isRetry
+         * @return
+         */
         public Builder setIsRetry(boolean isRetry){
             this.isRetry = isRetry;
             return this;

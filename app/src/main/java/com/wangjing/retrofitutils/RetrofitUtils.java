@@ -42,14 +42,28 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitUtils {
     private static RetrofitBuilder retrofitBuilder;
     private static OkHttpClient.Builder okhttpBuilder;
+    private static OkHttpClient okHttpClient;
     private static HttpLoggingInterceptor interceptor;
+
+    /**
+     * 饿汉式 单例，因为这个100%要用到
+     */
+    private static RetrofitUtils instance = new RetrofitUtils();
+
+    private RetrofitUtils() {
+    }
+
+    public static RetrofitUtils getInstance() {
+        Log.e("RetrofitUtils", "instance对应的地址:" + instance.toString());
+        return instance;
+    }
 
     /**
      * 初始化
      *
      * @param builder RetrofitBuilder
      */
-    public static void initialize(RetrofitBuilder builder) {
+    public void initialize(RetrofitBuilder builder) {
         clearAll();
         retrofitBuilder = builder;
         Log.e("RetrofitUtils", "RetrofitUtils初始化成功==》" + retrofitBuilder.getBaseUrl());
@@ -63,7 +77,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return <T> 泛型
      */
-    public static <T> T creatBaseApi(Class<T> serviceClass) {
+    public <T> T creatBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             if (getRetrofitBuilder().getFactory() != null) {
                 return new Retrofit.Builder()
@@ -91,7 +105,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return <T> 泛型
      */
-    public static <T> T creatBaseApiWithUrl(Class<T> serviceClass, String url) {
+    public <T> T creatBaseApiWithUrl(Class<T> serviceClass, String url) {
         synchronized (RetrofitUtils.class) {
             if (getRetrofitBuilder().getFactory() != null) {
                 return new Retrofit.Builder()
@@ -118,7 +132,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return <T> 泛型
      */
-    public static <T> T creatBaseApiWithAdapter(Class<T> serviceClass) {
+    public <T> T creatBaseApiWithAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             if (getRetrofitBuilder().getFactory() != null) {
                 return new Retrofit.Builder()
@@ -146,7 +160,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return serviceClass
      */
-    public static <T> T creatNewBaseApi(Class<T> serviceClass) {
+    public <T> T creatNewBaseApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
             if (getRetrofitBuilder().getFactory() != null) {
@@ -165,7 +179,7 @@ public class RetrofitUtils {
             }
         }
     }
-    
+
     /**
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有自定义的CallAdapterFactory
      *
@@ -173,8 +187,8 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return serviceClass
      */
-    public static <T> T creatBaseApiWithRxAdapter(Class<T> serviceClass) {
-        synchronized (RetrofitUtils.class) {       
+    public <T> T creatBaseApiWithRxAdapter(Class<T> serviceClass) {
+        synchronized (RetrofitUtils.class) {
             if (getRetrofitBuilder().getFactory() != null) {
                 return new Retrofit.Builder()
                         .baseUrl("" + getRetrofitBuilder().getBaseUrl())
@@ -201,7 +215,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return serviceClass
      */
-    public static <T> T creatNewBaseApiWithRxAdapter(Class<T> serviceClass) {
+    public <T> T creatNewBaseApiWithRxAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
             if (getRetrofitBuilder().getFactory() != null) {
@@ -230,7 +244,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return serviceClass
      */
-    public static <T> T creatNewBaseApiWithAdapter(Class<T> serviceClass) {
+    public <T> T creatNewBaseApiWithAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             clearAll();
             if (getRetrofitBuilder().getFactory() != null) {
@@ -261,7 +275,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return <T> 泛型
      */
-    public static <T> T creatNoBaseUrlApi(Class<T> serviceClass) {
+    public <T> T creatNoBaseUrlApi(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             //如果refrofit不为null，则滞空，创建新的retrofit
             clearAll();
@@ -289,7 +303,7 @@ public class RetrofitUtils {
      * @param <T>          泛型
      * @return <T> 泛型
      */
-    public static <T> T creatNoBaseUrlApiWithAdapter(Class<T> serviceClass) {
+    public <T> T creatNoBaseUrlApiWithAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
             //如果refrofit不为null，则滞空，创建新的retrofit
             clearAll();
@@ -315,7 +329,7 @@ public class RetrofitUtils {
     /**
      * 清空okhttpBuilder
      */
-    public static void clearOkhttpBuilder() {
+    public void clearOkhttpBuilder() {
         if (okhttpBuilder != null) {
             okhttpBuilder = null;
         }
@@ -324,8 +338,12 @@ public class RetrofitUtils {
     /**
      * 清空Retrofit和okhttpBuilder
      */
-    public static synchronized void clearAll() {
+    public synchronized void clearAll() {
         clearOkhttpBuilder();
+    }
+
+    public void setOkHttpClient(OkHttpClient okHttpClient) {
+        RetrofitUtils.okHttpClient = okHttpClient;
     }
 
     /**
@@ -333,9 +351,9 @@ public class RetrofitUtils {
      *
      * @return
      */
-    private static OkHttpClient getHttpClient() {
+    public OkHttpClient getHttpClient() {
         synchronized (RetrofitUtils.class) {
-            if (okhttpBuilder == null) {
+            if (okhttpBuilder == null || okHttpClient == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
                 //设置Http 请求 协议
                 if (getRetrofitBuilder().getProtocols() != null && !getRetrofitBuilder().getProtocols().isEmpty()) {
@@ -422,63 +440,67 @@ public class RetrofitUtils {
 //                    }
 //                };
 //                okhttpBuilder.cache(cache).addInterceptor(cacheInterceptor);
-            }
-            if (getRetrofitBuilder().isTrustSSL()) {
-                if (getRetrofitBuilder().getSslSocketFactory() != null) {
-                    okhttpBuilder.sslSocketFactory(getRetrofitBuilder().getSslSocketFactory());
-                } else {
-                    final TrustManager[] trustAllCerts = new TrustManager[]{
-                            new X509TrustManager() {
-                                @Override
-                                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                                }
 
-                                @Override
-                                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                                }
+                if (getRetrofitBuilder().isTrustSSL()) {
+                    if (getRetrofitBuilder().getSslSocketFactory() != null) {
+                        okhttpBuilder.sslSocketFactory(getRetrofitBuilder().getSslSocketFactory());
+                    } else {
+                        final TrustManager[] trustAllCerts = new TrustManager[]{
+                                new X509TrustManager() {
+                                    @Override
+                                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                                    }
 
-                                @Override
-                                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                                    return new java.security.cert.X509Certificate[]{};
-                                }
-                            }
-                    };
-                    // Install the all-trusting trust manager
-                    final SSLContext sslContext;
-                    try {
-                        sslContext = SSLContext.getInstance("SSL");
-                        sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-                        // Create an ssl socket factory with our all-trusting manager
-                        final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-                        okhttpBuilder.sslSocketFactory(sslSocketFactory);
+                                    @Override
+                                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                                    }
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                                    @Override
+                                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                        return new java.security.cert.X509Certificate[]{};
+                                    }
+                                }
+                        };
+                        // Install the all-trusting trust manager
+                        final SSLContext sslContext;
+                        try {
+                            sslContext = SSLContext.getInstance("SSL");
+                            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+                            // Create an ssl socket factory with our all-trusting manager
+                            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+                            okhttpBuilder.sslSocketFactory(sslSocketFactory);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+                    okhttpBuilder.hostnameVerifier(new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    });
                 }
-                okhttpBuilder.hostnameVerifier(new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
+                if (getRetrofitBuilder().isDebug()) {
+                    // Log信息拦截器
+                    if (interceptor == null) {
+                        interceptor = new HttpLoggingInterceptor();
+                        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                     }
-                });
-            }
-            if (getRetrofitBuilder().isDebug()) {
-                // Log信息拦截器
-                if (interceptor == null) {
-                    interceptor = new HttpLoggingInterceptor();
-                    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    //设置Debug Log 模式
+                    okhttpBuilder.addInterceptor(interceptor);
                 }
-                //设置Debug Log 模式
-                okhttpBuilder.addInterceptor(interceptor);
+                okhttpBuilder.retryOnConnectionFailure(getRetrofitBuilder().isRetry());
+                //设置超时
+                okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
+                //以上设置结束，才能build(),不然设置白搭
+                okHttpClient = okhttpBuilder.build();
             }
-            okhttpBuilder.retryOnConnectionFailure(getRetrofitBuilder().isRetry());
-            //设置超时
-            okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
-            okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
-            okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
-            //以上设置结束，才能build(),不然设置白搭
-            OkHttpClient okHttpClient = okhttpBuilder.build();
+
+            Log.e("okHttpClient", "okhttpBuilder对应的地址：" + okhttpBuilder.toString());
+            Log.e("okHttpClient", "okHttpClient对应的地址：" + okHttpClient.toString());
             return okHttpClient;
         }
     }
@@ -488,7 +510,7 @@ public class RetrofitUtils {
      *
      * @return RetrofitBuilder
      */
-    public static RetrofitBuilder getRetrofitBuilder() {
+    public RetrofitBuilder getRetrofitBuilder() {
         if (retrofitBuilder != null) {
             return retrofitBuilder;
         } else {
