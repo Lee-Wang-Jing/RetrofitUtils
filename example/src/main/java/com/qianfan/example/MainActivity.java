@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String Tag = MainActivity.class.getSimpleName();
 
-    private Button btn_getallname, btn_search, btn_logthread;
+    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service;
+
+    private WanAndroidService wanAndroidService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_getallname = findViewById(R.id.btn_getallname);
         btn_search = findViewById(R.id.btn_search);
         btn_logthread = findViewById(R.id.btn_logthread);
+        btn_getallname_service = findViewById(R.id.btn_getallname_service);
+        btn_search_service = findViewById(R.id.btn_search_service);
 
         btn_getallname.setOnClickListener(this);
         btn_search.setOnClickListener(this);
         btn_logthread.setOnClickListener(this);
+        btn_getallname_service.setOnClickListener(this);
+        btn_search_service.setOnClickListener(this);
 
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
                 .baseUrl("https://www.wanandroid.com")//设置BaseUrl
@@ -60,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_logthread:
                 logAllThread();
+                break;
+            case R.id.btn_getallname_service:
+                getSearchData_Service();
+                break;
+            case R.id.btn_search_service:
+                getAllName_Service();
                 break;
             default:
                 break;
@@ -128,6 +140,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public WanAndroidService getWanAndroidService() {
+        if (wanAndroidService == null) {
+            wanAndroidService = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class);
+        }
+        return wanAndroidService;
+    }
+
+    private void getAllName_Service() {
+        Call<String> call = getWanAndroidService().getMavenPom();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void getSearchData_Service() {
+        Call<String> call = getWanAndroidService().search("viewpager2");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    /**
+     * 打印当前App所有的线程信息
+     */
     private void logAllThread() {
         Map<Thread, StackTraceElement[]> threadMap = Thread.getAllStackTraces();
         Log.e("albertThreadDebug", "all start==============================================");
