@@ -346,14 +346,9 @@ public class RetrofitUtils {
         RetrofitUtils.okHttpClient = okHttpClient;
     }
 
-    /**
-     * 获取OkHttpClient
-     *
-     * @return
-     */
-    public OkHttpClient getHttpClient() {
+    public OkHttpClient.Builder getOkHttpBuilder() {
         synchronized (RetrofitUtils.class) {
-            if (okhttpBuilder == null || okHttpClient == null) {
+            if (okhttpBuilder == null) {
                 okhttpBuilder = new OkHttpClient.Builder();
                 //设置Http 请求 协议
                 if (getRetrofitBuilder().getProtocols() != null && !getRetrofitBuilder().getProtocols().isEmpty()) {
@@ -495,10 +490,24 @@ public class RetrofitUtils {
                 okhttpBuilder.connectTimeout(getRetrofitBuilder().getConnectTimeout(), TimeUnit.SECONDS);
                 okhttpBuilder.readTimeout(getRetrofitBuilder().getReadTimeout(), TimeUnit.SECONDS);
                 okhttpBuilder.writeTimeout(getRetrofitBuilder().getWriteTimeout(), TimeUnit.SECONDS);
+                okhttpBuilder.callTimeout(getRetrofitBuilder().getCallTimeout(), TimeUnit.SECONDS);
+            }
+            return okhttpBuilder;
+        }
+    }
+
+    /**
+     * 获取OkHttpClient
+     *
+     * @return
+     */
+    public OkHttpClient getHttpClient() {
+        synchronized (RetrofitUtils.class) {
+            if (okhttpBuilder == null || okHttpClient == null) {
+                getOkHttpBuilder();
                 //以上设置结束，才能build(),不然设置白搭
                 okHttpClient = okhttpBuilder.build();
             }
-
             Log.e("okHttpClient", "okhttpBuilder对应的地址：" + okhttpBuilder.toString());
             Log.e("okHttpClient", "okHttpClient对应的地址：" + okHttpClient.toString());
             return okHttpClient;

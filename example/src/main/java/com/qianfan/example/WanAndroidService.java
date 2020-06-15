@@ -1,5 +1,7 @@
 package com.qianfan.example;
 
+import com.wangjing.retrofitutils.DynamicTimeOut;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -12,6 +14,7 @@ public interface WanAndroidService {
      * @return String
      */
     @GET("maven_pom/package/json")
+    @DynamicTimeOut(timeout = 30)
     Call<String> getMavenPom();
 
     /**
@@ -22,5 +25,6 @@ public interface WanAndroidService {
      * @return String
      */
     @GET("maven_pom/search/json")
+    @DynamicTimeOut(timeout = 10)
     Call<String> search(@Query("k") String k);
 }

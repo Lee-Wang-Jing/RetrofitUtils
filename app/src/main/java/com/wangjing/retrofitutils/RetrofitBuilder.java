@@ -27,6 +27,7 @@ public class RetrofitBuilder {
     private int connectTimeout;
     private int readTimeout;
     private int writeTimeout;
+    private int callTimeout;
     //headerHashMap header的键值对集合
     private HashMap<String, String> headerHashMap;
     private HashMap<String, String> addHeaderHashMap;
@@ -61,6 +62,10 @@ public class RetrofitBuilder {
 
     public int getWriteTimeout() {
         return writeTimeout;
+    }
+
+    public int getCallTimeout() {
+        return callTimeout;
     }
 
 
@@ -119,6 +124,10 @@ public class RetrofitBuilder {
 
     public void setWriteTimeout(int writeTimeout) {
         this.writeTimeout = writeTimeout;
+    }
+
+    public void setCallTimeout(int callTimeout) {
+        this.callTimeout = callTimeout;
     }
 
     public void setHeaderHashMap(HashMap<String, String> headerHashMap) {
@@ -181,6 +190,7 @@ public class RetrofitBuilder {
         private int connectTimeout;
         private int readTimeout;
         private int writeTimeout;
+        private int callTimeout;
         //headerHashMap header的键值对集合
         private HashMap<String, String> headerHashMap;
         private HashMap<String, String> addHeaderHashMap;
@@ -241,6 +251,19 @@ public class RetrofitBuilder {
          */
         public Builder writeTimeout(int writeTimeout) {
             this.writeTimeout = writeTimeout;
+            return this;
+        }
+
+        /**
+         * 设置网络请求的callTimeout超时时间
+         * 完整的HTTP调用的时间限制。这包括解析DNS，连接，编写请求正文，服务器处理以及读取响应正文。
+         * 与其他超时不同，它的默认值设置为零，这意味着没有超时
+         *
+         * @param callTimeout 超时秒数
+         * @return Builder
+         */
+        public Builder callTimeout(int callTimeout) {
+            this.callTimeout = callTimeout;
             return this;
         }
 
@@ -347,20 +370,22 @@ public class RetrofitBuilder {
 
         /**
          * 设置网络请求过程中的事件
+         *
          * @param factory
          * @return
          */
-        public Builder setEventListenerFactory(EventListener.Factory factory){
+        public Builder setEventListenerFactory(EventListener.Factory factory) {
             this.eventListenerFactory = factory;
             return this;
         }
 
         /**
          * 设置请求失败是否会重试
+         *
          * @param isRetry
          * @return
          */
-        public Builder setIsRetry(boolean isRetry){
+        public Builder setIsRetry(boolean isRetry) {
             this.isRetry = isRetry;
             return this;
         }
@@ -376,6 +401,7 @@ public class RetrofitBuilder {
         connectTimeout = b.connectTimeout;
         readTimeout = b.readTimeout;
         writeTimeout = b.writeTimeout;
+        callTimeout = b.callTimeout;
         headerHashMap = b.headerHashMap;
         addHeaderHashMap = b.addHeaderHashMap;
         headersHashMap = b.headersHashMap;
