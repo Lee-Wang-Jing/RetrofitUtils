@@ -139,21 +139,6 @@ public class RetrofitUtils {
     }
 
     /**
-     * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有自定义的CallAdapterFactory
-     *
-     * @param serviceClass serviceClass
-     * @param <T>          泛型
-     * @return serviceClass
-     */
-    public <T> T creatNewBaseApiWithRxAdapter(Class<T> serviceClass) {
-        synchronized (RetrofitUtils.class) {
-            clearAll();
-            return getRetrofit("", RxJava2CallAdapterFactory.create())
-                    .create(serviceClass);
-        }
-    }
-
-    /**
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有LiveDataCallAdapterFactory
      *
      * @param serviceClass serviceClass
