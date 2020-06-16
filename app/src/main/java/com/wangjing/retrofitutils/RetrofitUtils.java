@@ -138,21 +138,6 @@ public class RetrofitUtils {
         }
     }
 
-    /**
-     * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有LiveDataCallAdapterFactory
-     *
-     * @param serviceClass serviceClass
-     * @param <T>          泛型
-     * @return serviceClass
-     */
-    public <T> T creatNewBaseApiWithAdapter(Class<T> serviceClass) {
-        synchronized (RetrofitUtils.class) {
-            clearAll();
-            return getRetrofit("", new LiveDataCallAdapterFactory())
-                    .create(serviceClass);
-        }
-    }
-
 
     /**
      * 清空okhttpBuilder
