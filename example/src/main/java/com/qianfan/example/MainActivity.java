@@ -79,34 +79,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getSearchData() {
-//        RetrofitUtils.getInstance().setOkHttpClient(RetrofitUtils.getInstance().getHttpClient().newBuilder().readTimeout(10, TimeUnit.SECONDS)
-//                .connectTimeout(10, TimeUnit.SECONDS)
-//                .writeTimeout(10, TimeUnit.SECONDS)
-//                .build());
-        RetrofitUtils.getInstance().getHttpClient().newBuilder()
-                .readTimeout(10, TimeUnit.SECONDS)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .callTimeout(10, TimeUnit.SECONDS)
-                .build();
-
-
-        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
-        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
-        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
-        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
-
-        RetrofitUtils.getInstance().clearAll();
-        RetrofitUtils.getInstance().getRetrofitBuilder().setReadTimeout(10);
-        RetrofitUtils.getInstance().getRetrofitBuilder().setConnectTimeout(10);
-        RetrofitUtils.getInstance().getRetrofitBuilder().setWriteTimeout(10);
-        RetrofitUtils.getInstance().getRetrofitBuilder().setCallTimeout(10);
-
-
-        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
-        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
-        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
-        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
+//        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
+//        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
+//        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
+//        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
+//
+//        RetrofitUtils.getInstance().clearAll();
+//        RetrofitUtils.getInstance().getRetrofitBuilder().setReadTimeout(10);
+//        RetrofitUtils.getInstance().getRetrofitBuilder().setConnectTimeout(10);
+//        RetrofitUtils.getInstance().getRetrofitBuilder().setWriteTimeout(10);
+//        RetrofitUtils.getInstance().getRetrofitBuilder().setCallTimeout(10);
+//
+//
+//        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
+//        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
+//        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
+//        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
 
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).search("viewpager2");
         call.enqueue(new Callback<String>() {
