@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String Tag = MainActivity.class.getSimpleName();
 
-    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service, btn_testBaseUrl;
+    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service, btn_testBaseUrl,btn_testTimeout;
 
     private WanAndroidService wanAndroidService;
 
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_getallname_service = findViewById(R.id.btn_getallname_service);
         btn_search_service = findViewById(R.id.btn_search_service);
         btn_testBaseUrl = findViewById(R.id.btn_testBaseUrl);
+        btn_testTimeout = findViewById(R.id.btn_testTimeout);
+
 
         btn_getallname.setOnClickListener(this);
         btn_search.setOnClickListener(this);
@@ -44,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_getallname_service.setOnClickListener(this);
         btn_search_service.setOnClickListener(this);
         btn_testBaseUrl.setOnClickListener(this);
+        btn_testTimeout.setOnClickListener(this);
 
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
                 .baseUrl("https://www.wanandroid.com")//设置BaseUrl
                 .connectTimeout(30)//设置connectTimeout
                 .writeTimeout(30)//设置writeTimeout
                 .readTimeout(30)//设置readTimeout
+                .callTimeout(30)//设置callTimeout
                 .setIsRetry(true)//设置请求失败是否会重试
                 .setDebug(true)//设置是否是debug模式，debug模式则会输出日志
                 .builder();
@@ -79,13 +83,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_testBaseUrl:
                 testBaseUrl();
                 break;
+            case R.id.btn_testTimeout:
+                testTimeOut();
+                break;
             default:
                 break;
         }
     }
 
+    private void testTimeOut() {
+        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
+        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
+        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
+        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
+        RetrofitUtils.getInstance().setTimeOut(10);
+        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
+        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
+        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
+        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
+    }
+
     private void testBaseUrl() {
-        Call<String> call= RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getTop("https://api.apiopen.top/getJoke?page=1&count=2&type=video");
+        Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getTop("https://api.apiopen.top/getJoke?page=1&count=2&type=video");
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -100,23 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getSearchData() {
-//        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
-//        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
-//        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
-//        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
-//
-//        RetrofitUtils.getInstance().clearAll();
-//        RetrofitUtils.getInstance().getRetrofitBuilder().setReadTimeout(10);
-//        RetrofitUtils.getInstance().getRetrofitBuilder().setConnectTimeout(10);
-//        RetrofitUtils.getInstance().getRetrofitBuilder().setWriteTimeout(10);
-//        RetrofitUtils.getInstance().getRetrofitBuilder().setCallTimeout(10);
-//
-//
-//        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
-//        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
-//        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
-//        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
-
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).search("viewpager2");
         call.enqueue(new Callback<String>() {
             @Override
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getAllName() {
-        
+
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getMavenPom();
         call.enqueue(new Callback<String>() {
             @Override

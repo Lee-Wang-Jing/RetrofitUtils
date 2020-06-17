@@ -65,4 +65,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_search_service" />
 
+    <Button
+        android:id="@+id/btn_testTimeout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试设置超时时间是否生效"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_testBaseUrl" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
