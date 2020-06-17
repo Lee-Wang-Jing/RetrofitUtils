@@ -16,12 +16,13 @@ import java.util.concurrent.TimeUnit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String Tag = MainActivity.class.getSimpleName();
 
-    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service;
+    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service, btn_testBaseUrl;
 
     private WanAndroidService wanAndroidService;
 
@@ -35,12 +36,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_logthread = findViewById(R.id.btn_logthread);
         btn_getallname_service = findViewById(R.id.btn_getallname_service);
         btn_search_service = findViewById(R.id.btn_search_service);
+        btn_testBaseUrl = findViewById(R.id.btn_testBaseUrl);
 
         btn_getallname.setOnClickListener(this);
         btn_search.setOnClickListener(this);
         btn_logthread.setOnClickListener(this);
         btn_getallname_service.setOnClickListener(this);
         btn_search_service.setOnClickListener(this);
+        btn_testBaseUrl.setOnClickListener(this);
 
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
                 .baseUrl("https://www.wanandroid.com")//设置BaseUrl
@@ -73,9 +76,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_search_service:
                 getAllName_Service();
                 break;
+            case R.id.btn_testBaseUrl:
+                testBaseUrl();
+                break;
             default:
                 break;
         }
+    }
+
+    private void testBaseUrl() {
+        Call<String> call= RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getTop("https://api.apiopen.top/getJoke?page=1&count=2&type=video");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getSearchData() {
