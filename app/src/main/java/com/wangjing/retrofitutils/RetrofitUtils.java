@@ -388,6 +388,7 @@ public class RetrofitUtils {
 
     /**
      * 修改 okHttpClient 超时时间
+     *
      * @param timeOut 超时时间 单位 秒
      */
     public void setTimeOut(int timeOut) {
@@ -399,6 +400,7 @@ public class RetrofitUtils {
                         .writeTimeout(timeOut, TimeUnit.SECONDS)
                         .callTimeout(timeOut, TimeUnit.SECONDS)
                         .build();
+                retrofit = getRetrofit("", null).newBuilder().client(okHttpClient).build();
             }
         }
     }
