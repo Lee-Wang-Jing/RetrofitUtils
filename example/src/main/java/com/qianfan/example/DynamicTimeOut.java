@@ -1,4 +1,4 @@
-package com.wangjing.retrofitutils;
+package com.qianfan.example;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

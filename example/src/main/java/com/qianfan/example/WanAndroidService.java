@@ -1,6 +1,5 @@
 package com.qianfan.example;
 
-import com.wangjing.retrofitutils.DynamicTimeOut;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

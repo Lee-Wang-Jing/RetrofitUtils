@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getAllName() {
+        
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getMavenPom();
         call.enqueue(new Callback<String>() {
             @Override
