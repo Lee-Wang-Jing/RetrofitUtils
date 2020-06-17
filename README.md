@@ -227,6 +227,18 @@ Call<List<Activity>> call = service.getActivityList(
 ```
 
 ### 版本树
+- 1.3.0版本发布 - 2020年06月17日
+    - 新增 creatBaseApiWithRxAdapter 方法，支持 RxJava2CallAdapterFactory.create()
+    - 新增 RetrofitBuilder 设置 是否重试的方法 isRetry()
+    - RetrofitUtils 使用单例模式，新增Example
+    - 删除 creatBaseApiWithUrl 用Retrofit注解代替
+    - 删除 creatNewBaseApi 方法
+    - 删除 creatNewBaseApiWithRxAdapter 方法
+    - 删除 creatNoBaseUrlApi 方法
+    - 删除 creatNoBaseUrlApiWithAdapter 方法
+    - 删除 creatNewBaseApiWithAdapter 方法
+    - 删除 creatBaseApiWithAdapter 方法
+    - 缓存 retrofit 和 retrofitWithRx，防止多次创建线程
 - 1.1.8版本发布 - 2019年6月1日
     - 修复RetrofitUtils.initialize 二次初始化时 retrofit 和 okhttpBuilder 没有重置的bug
 - 1.1.7版本发布 - 2019年4月18日
