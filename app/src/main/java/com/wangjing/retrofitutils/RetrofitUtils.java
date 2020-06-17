@@ -45,6 +45,7 @@ public class RetrofitUtils {
     private static OkHttpClient.Builder okhttpBuilder;
     private static OkHttpClient okHttpClient;
     private static Retrofit retrofit;
+    private static Retrofit retrofitWithRx;
     private static HttpLoggingInterceptor interceptor;
 
     /**
@@ -96,6 +97,30 @@ public class RetrofitUtils {
         }
     }
 
+    public Retrofit getRetrofitWithRxAdapter(String baseUrl, CallAdapter.Factory callAdapterFactory) {
+        synchronized (RetrofitUtils.class) {
+            if (retrofit == null) {
+                Retrofit.Builder builder = new Retrofit.Builder();
+                if (baseUrl == null || baseUrl.isEmpty()) {
+                    baseUrl = "" + getRetrofitBuilder().getBaseUrl();
+                }
+                Converter.Factory factory = getRetrofitBuilder().getFactory();
+                if (factory == null) {
+                    factory = GsonConverterFactory.create();
+                }
+                if (callAdapterFactory != null) {
+                    builder.addCallAdapterFactory(callAdapterFactory);
+                }
+                retrofit = builder.baseUrl("" + baseUrl)
+                        .addConverterFactory(factory)
+                        .client(getHttpClient())
+                        .build();
+
+            }
+            return retrofit;
+        }
+    }
+
     /**
      * 创建带有默认BaseUrl的serviceClass
      *
@@ -110,19 +135,19 @@ public class RetrofitUtils {
         }
     }
 
-    /**
-     * 创建带有默认BaseUrl的serviceClass，并且含有LiveDataCallAdapterFactory
-     *
-     * @param serviceClass serviceClass
-     * @param <T>          泛型
-     * @return <T> 泛型
-     */
-    public <T> T creatBaseApiWithAdapter(Class<T> serviceClass) {
-        synchronized (RetrofitUtils.class) {
-            return getRetrofit("", new LiveDataCallAdapterFactory())
-                    .create(serviceClass);
-        }
-    }
+//    /**
+//     * 创建带有默认BaseUrl的serviceClass，并且含有LiveDataCallAdapterFactory
+//     *
+//     * @param serviceClass serviceClass
+//     * @param <T>          泛型
+//     * @return <T> 泛型
+//     */
+//    public <T> T creatBaseApiWithAdapter(Class<T> serviceClass) {
+//        synchronized (RetrofitUtils.class) {
+//            return getRetrofit("", new LiveDataCallAdapterFactory())
+//                    .create(serviceClass);
+//        }
+//    }
 
     /**
      * 创建新的带有默认BaseUrl的serviceClass,会将原来的retrofit置空生成新的，并且含有自定义的CallAdapterFactory
@@ -133,7 +158,7 @@ public class RetrofitUtils {
      */
     public <T> T creatBaseApiWithRxAdapter(Class<T> serviceClass) {
         synchronized (RetrofitUtils.class) {
-            return getRetrofit("", RxJava2CallAdapterFactory.create())
+            return getRetrofitWithRxAdapter("", RxJava2CallAdapterFactory.create())
                     .create(serviceClass);
         }
     }
