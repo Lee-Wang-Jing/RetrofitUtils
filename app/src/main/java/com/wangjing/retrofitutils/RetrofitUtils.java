@@ -99,7 +99,7 @@ public class RetrofitUtils {
 
     public Retrofit getRetrofitWithRxAdapter(String baseUrl, CallAdapter.Factory callAdapterFactory) {
         synchronized (RetrofitUtils.class) {
-            if (retrofit == null) {
+            if (retrofitWithRx == null) {
                 Retrofit.Builder builder = new Retrofit.Builder();
                 if (baseUrl == null || baseUrl.isEmpty()) {
                     baseUrl = "" + getRetrofitBuilder().getBaseUrl();
@@ -111,13 +111,13 @@ public class RetrofitUtils {
                 if (callAdapterFactory != null) {
                     builder.addCallAdapterFactory(callAdapterFactory);
                 }
-                retrofit = builder.baseUrl("" + baseUrl)
+                retrofitWithRx = builder.baseUrl("" + baseUrl)
                         .addConverterFactory(factory)
                         .client(getHttpClient())
                         .build();
 
             }
-            return retrofit;
+            return retrofitWithRx;
         }
     }
 
@@ -192,12 +192,22 @@ public class RetrofitUtils {
     }
 
     /**
+     * 清空 retrofit
+     */
+    public void clearRetrofitWithRx() {
+        if (retrofitWithRx != null) {
+            retrofitWithRx = null;
+        }
+    }
+
+    /**
      * 清空Retrofit和okhttpBuilder
      */
     public synchronized void clearAll() {
         clearOkhttpBuilder();
         clearOkHttpClient();
         clearRetrofit();
+        clearRetrofitWithRx();
     }
 
     public void setOkHttpClient(OkHttpClient okHttpClient) {
