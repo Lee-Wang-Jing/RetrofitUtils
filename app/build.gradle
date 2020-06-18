@@ -1,16 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
-
-group='com.github.Lee-Wang-Jing'
 
 android {
     compileSdkVersion 29
 
     defaultConfig {
 //        applicationId "com.wangjing.retrofitutils"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 29
     }
     buildTypes {
@@ -19,20 +14,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //https://github.com/square/retrofit
     //2.7.0开始最低支持安卓5.0
-    api 'com.squareup.retrofit2:retrofit:2.6.4'
-    api 'com.squareup.retrofit2:converter-gson:2.6.4'
-    api 'com.squareup.retrofit2:converter-scalars:2.6.4'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.4'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     //https://github.com/square/okhttp
-    api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    compileOnly 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.14.9'
+//    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    compileOnly 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
 }
 

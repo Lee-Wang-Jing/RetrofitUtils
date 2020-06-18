@@ -2,13 +2,8 @@ package com.wangjing.retrofitutils;
 
 import android.util.Log;
 
-import com.wangjing.retrofitutils.adapter.LiveDataCallAdapter;
-import com.wangjing.retrofitutils.adapter.LiveDataCallAdapterFactory;
-
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +18,6 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -32,7 +26,6 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * 作者：Created by WangJing on 2018/4/16.
