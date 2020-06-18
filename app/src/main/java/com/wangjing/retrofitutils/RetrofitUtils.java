@@ -379,24 +379,24 @@ public class RetrofitUtils {
         }
     }
 
-    /**
-     * 修改 okHttpClient 超时时间
-     *
-     * @param timeOut 超时时间 单位 秒
-     */
-    public void setTimeOut(int timeOut) {
-        synchronized (RetrofitUtils.class) {
-            if (timeOut > 0) {
-                okHttpClient = getHttpClient().newBuilder()
-                        .connectTimeout(timeOut, TimeUnit.SECONDS)
-                        .readTimeout(timeOut, TimeUnit.SECONDS)
-                        .writeTimeout(timeOut, TimeUnit.SECONDS)
-                        .callTimeout(timeOut, TimeUnit.SECONDS)
-                        .build();
-                retrofit = getRetrofit("", null).newBuilder().client(okHttpClient).build();
-            }
-        }
-    }
+//    /**
+//     * 修改 okHttpClient 超时时间
+//     *
+//     * @param timeOut 超时时间 单位 秒
+//     */
+//    public void setTimeOut(int timeOut) {
+//        synchronized (RetrofitUtils.class) {
+//            if (timeOut > 0) {
+//                okHttpClient = getHttpClient().newBuilder()
+//                        .connectTimeout(timeOut, TimeUnit.SECONDS)
+//                        .readTimeout(timeOut, TimeUnit.SECONDS)
+//                        .writeTimeout(timeOut, TimeUnit.SECONDS)
+//                        .callTimeout(timeOut, TimeUnit.SECONDS)
+//                        .build();
+//                retrofit = getRetrofit("", null).newBuilder().client(okHttpClient).build();
+//            }
+//        }
+//    }
 
     /**
      * 获取RetrofitBuilder，如果为null，则新建一个空的

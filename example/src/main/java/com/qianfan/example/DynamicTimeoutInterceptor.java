@@ -14,23 +14,25 @@ import retrofit2.Invocation;
 public class DynamicTimeoutInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request=chain.request();
+        Request request = chain.request();
         //核心代码!!!
         final Invocation tag = request.tag(Invocation.class);
         final Method method = tag != null ? tag.method() : null;
         final DynamicTimeOut timeout = method != null ? method.getAnnotation(DynamicTimeOut.class) : null;
 
-        Log.d("invocation",tag!= null ? tag.toString() : "");
-
-        if(timeout !=null && timeout.timeout() > 0){
-            Response proceed = chain
-                    .withConnectTimeout(timeout.timeout(), TimeUnit.SECONDS)
-                    .withReadTimeout(timeout.timeout(), TimeUnit.SECONDS)
-                    .withWriteTimeout(timeout.timeout(), TimeUnit.SECONDS)
-                    .proceed(request);
-            return proceed;
+        Log.d("invocation", tag != null ? tag.toString() : "");
+        int callTimeOut = 0;
+        if (timeout != null && timeout.timeout() > 0) {
+            callTimeOut = timeout.timeout();
+        } else {
+            callTimeOut = 30;
         }
-
-        return chain.proceed(request);
+        chain.call().timeout().timeout(callTimeOut, TimeUnit.SECONDS);
+        Response proceed = chain
+                .withConnectTimeout(callTimeOut, TimeUnit.SECONDS)
+                .withReadTimeout(callTimeOut, TimeUnit.SECONDS)
+                .withWriteTimeout(callTimeOut, TimeUnit.SECONDS)
+                .proceed(request);
+        return proceed;
     }
 }
