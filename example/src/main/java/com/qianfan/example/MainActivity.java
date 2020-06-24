@@ -96,16 +96,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
         Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
         Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
-        RetrofitUtils.getInstance().setTimeOut(10);
         Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
         Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
         Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
         Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).search("viewpager2");
-        Log.e("Tag","timeoutNanos==> "+call.timeout().timeoutNanos());
-        call.timeout().timeout(3,TimeUnit.SECONDS);
-        call.timeout().timeoutNanos();
-        Log.e("Tag","timeoutNanos==> "+call.timeout().timeoutNanos());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -155,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void getAllName() {
 
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getMavenPom();
-        Log.e("Tag","timeoutNanos==> "+call.timeout().timeoutNanos());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
