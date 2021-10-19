@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -52,17 +53,17 @@ public class GsonUtils {
     }
 
     /**
-     * String转成list
+     * JsonString转成list
      *
      * @param gsonString String
-     * @param cls        Class
+     * @param type       Type
+     *                   new TypeToken<List<T>>() {}.getType()
      * @return List数组
      */
-    public static <T> List<T> gsonToList(String gsonString, Class<T> cls) {
+    public static <T> List<T> gsonToList(String gsonString, Type type) {
         List<T> list = null;
         if (gson != null) {
-            list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
-            }.getType());
+            list = gson.fromJson(gsonString,type);
         }
         return list;
     }
