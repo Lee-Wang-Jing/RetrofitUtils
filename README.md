@@ -17,7 +17,7 @@ implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.3.4'
 <dependency>
   <groupId>com.github.Lee-Wang-Jing</groupId>
   <artifactId>RetrofitUtils</artifactId>
-  <version>1.2.13-alpha</version>
+  <version>1.3.4</version>
   <type>pom</type>
 </dependency>
 ```
@@ -77,7 +77,7 @@ RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
         .setDebug(true)//设置是否是debug模式，debug模式则会输出日志
         .builder();
 
-RetrofitUtils.initialize(retrofitBuilder);
+RetrofitUtils.getInstance().initialize(retrofitBuilder);
 ```
 
     如果同时设置了 headerHashMap、addHeaderHashMap和headersHashMap
