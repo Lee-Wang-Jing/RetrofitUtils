@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+    compileSdkVersion 34
     defaultConfig {
 //        applicationId "com.wangjing.retrofitutils"
         minSdkVersion 21
