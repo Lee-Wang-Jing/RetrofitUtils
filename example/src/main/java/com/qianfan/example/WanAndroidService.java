@@ -29,8 +29,8 @@ public interface WanAndroidService {
     Call<String> search(@Query("k") String k);
 
     /**
-     * 获取最新实时段子
-     * https://api.apiopen.top/getJoke?page=1&count=2&type=video
+     * 获取一言名句- https://api.apiopen.top/api/sentences
+     * 获取好看短视频 - https://api.apiopen.top/api/getHaoKanVideo?page=0&size=10
      * @param url String
      * @return String
      */

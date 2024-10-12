@@ -10,7 +10,7 @@
         android:id="@+id/btn_getallname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="获取所有包名"
+        android:text="Get无参 - 获取所有包名"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,20 +20,10 @@
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="查询接口"
+        android:text="Get有参 - 查询接口"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_getallname" />
-
-
-    <Button
-        android:id="@+id/btn_logthread"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="打印所有线程信息"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
 
 
     <Button
@@ -41,16 +31,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="获取所有包名-Service复用"
+        android:text="Service复用-获取所有包名"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_logthread" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
 
     <Button
         android:id="@+id/btn_search_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="查询接口-Service复用"
+        android:text="Service复用 - 查询接口"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_getallname_service" />
@@ -60,18 +50,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="测试@Url是否会覆盖BaseUrl"
+        android:text="\@Url覆盖BaseUrl"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_search_service" />
 
+
     <Button
-        android:id="@+id/btn_testTimeout"
+        android:id="@+id/btn_logthread"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="测试设置超时时间是否生效"
+        android:text="打印所有线程信息"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_testBaseUrl" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

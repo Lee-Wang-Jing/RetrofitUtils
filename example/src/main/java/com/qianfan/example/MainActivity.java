@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String Tag = MainActivity.class.getSimpleName();
 
-    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service, btn_testBaseUrl,btn_testTimeout;
+    private Button btn_getallname, btn_search, btn_logthread, btn_getallname_service, btn_search_service, btn_testBaseUrl;
 
     private WanAndroidService wanAndroidService;
 
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_getallname_service = findViewById(R.id.btn_getallname_service);
         btn_search_service = findViewById(R.id.btn_search_service);
         btn_testBaseUrl = findViewById(R.id.btn_testBaseUrl);
-        btn_testTimeout = findViewById(R.id.btn_testTimeout);
 
 
         btn_getallname.setOnClickListener(this);
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_getallname_service.setOnClickListener(this);
         btn_search_service.setOnClickListener(this);
         btn_testBaseUrl.setOnClickListener(this);
-        btn_testTimeout.setOnClickListener(this);
 
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder.Builder()
                 .baseUrl("https://www.wanandroid.com")//设置BaseUrl
@@ -71,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_search:
                 getSearchData();
                 break;
-            case R.id.btn_logthread:
-                logAllThread();
-                break;
             case R.id.btn_getallname_service:
                 getSearchData_Service();
                 break;
@@ -83,57 +78,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_testBaseUrl:
                 testBaseUrl();
                 break;
-            case R.id.btn_testTimeout:
-                testTimeOut();
+            case R.id.btn_logthread:
+                logAllThread();
                 break;
             default:
                 break;
         }
     }
 
-    private void testTimeOut() {
-        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
-        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
-        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
-        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
-        RetrofitUtils.getInstance().setTimeOut(10);
-        Log.e(Tag, "readTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().readTimeoutMillis());
-        Log.e(Tag, "connectTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().connectTimeoutMillis());
-        Log.e(Tag, "writeTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().writeTimeoutMillis());
-        Log.e(Tag, "callTimeoutMillis==>" + RetrofitUtils.getInstance().getHttpClient().callTimeoutMillis());
-        Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).search("viewpager2");
-        Log.e("Tag","timeoutNanos==> "+call.timeout().timeoutNanos());
-        call.timeout().timeout(3,TimeUnit.SECONDS);
-        call.timeout().timeoutNanos();
-        Log.e("Tag","timeoutNanos==> "+call.timeout().timeoutNanos());
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    private void testBaseUrl() {
-        Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getTop("https://api.apiopen.top/getJoke?page=1&count=2&type=video");
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-    }
 
     private void getSearchData() {
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).search("viewpager2");
@@ -153,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getAllName() {
-
         Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getMavenPom();
         Log.e("Tag","timeoutNanos==> "+call.timeout().timeoutNanos());
         call.enqueue(new Callback<String>() {
@@ -211,6 +163,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * 测试@Url注解 代替BaseUrl
+     */
+    private void testBaseUrl() {
+        Call<String> call = RetrofitUtils.getInstance().creatBaseApi(WanAndroidService.class).getTop("https://api.apiopen.top/api/sentences");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /**
      * 打印当前App所有的线程信息
      */
     private void logAllThread() {
@@ -232,4 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         Log.e("albertThreadDebug", "all end==============================================");
     }
+
+
+
 }
