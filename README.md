@@ -10,14 +10,14 @@ RetrofitUtils是Retrofit的封装工具类，方便开发使用，方便快捷
 # Dependencies
 * Gradle
 ```groovy
-implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.3.4'
+implementation 'com.github.Lee-Wang-Jing:RetrofitUtils:1.3.5'
 ```
 * Maven
 ```xml
 <dependency>
   <groupId>com.github.Lee-Wang-Jing</groupId>
   <artifactId>RetrofitUtils</artifactId>
-  <version>1.3.4</version>
+  <version>1.3.5</version>
   <type>pom</type>
 </dependency>
 ```
