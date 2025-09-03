@@ -219,8 +219,10 @@ public class RetrofitUtils {
                     okhttpBuilder.eventListenerFactory(getRetrofitBuilder().getEventListenerFactory());
                 }
                 //错误重连
-                if (getRetrofitBuilder().getInterceptor() != null) {
-                    okhttpBuilder.addInterceptor(getRetrofitBuilder().getInterceptor());
+                if (getRetrofitBuilder().getInterceptors() != null) {
+                    for (int i = 0; i < getRetrofitBuilder().getInterceptors().size(); i++) {
+                        okhttpBuilder.addInterceptor(getRetrofitBuilder().getInterceptors().get(i));
+                    }
                 } else {
                     //设置请求头Header
                     okhttpBuilder.addInterceptor(new Interceptor() {

@@ -32,7 +32,8 @@ public class RetrofitBuilder {
     private HashMap<String, String> headerHashMap;
     private HashMap<String, String> addHeaderHashMap;
     private HashMap<String, String> headersHashMap;
-    private Interceptor interceptor;
+    //    private Interceptor interceptor;
+    private List<Interceptor> interceptors;
     private Converter.Factory factory;
     private SSLSocketFactory sslSocketFactory;
     private EventListener.Factory eventListenerFactory;
@@ -146,12 +147,24 @@ public class RetrofitBuilder {
         isTrustSSL = trustSSL;
     }
 
-    public void setInterceptor(Interceptor interceptor) {
-        this.interceptor = interceptor;
+//    public void setInterceptor(Interceptor interceptor) {
+//        this.interceptor = interceptor;
+//    }
+//
+//    public Interceptor getInterceptor() {
+//        return interceptor;
+//    }
+
+    public List<Interceptor> getInterceptors() {
+        return interceptors;
     }
 
-    public Interceptor getInterceptor() {
-        return interceptor;
+    public void setInterceptors(List<Interceptor> interceptors) {
+        this.interceptors = interceptors;
+    }
+
+    public void setEventListenerFactory(EventListener.Factory eventListenerFactory) {
+        this.eventListenerFactory = eventListenerFactory;
     }
 
     public SSLSocketFactory getSslSocketFactory() {
@@ -199,7 +212,8 @@ public class RetrofitBuilder {
         private boolean isDebug;
         private boolean isTrustSSL;
 
-        private Interceptor interceptor;
+        //        private Interceptor interceptor;
+        private List<Interceptor> interceptors;
         private Converter.Factory factory;
         private SSLSocketFactory sslSocketFactory;
 
@@ -326,11 +340,11 @@ public class RetrofitBuilder {
         /**
          * 设置拦截器
          *
-         * @param interceptor Interceptor
+         * @param interceptors Interceptors
          * @return Builder
          */
-        public Builder setInterceptor(Interceptor interceptor) {
-            this.interceptor = interceptor;
+        public Builder setInterceptors(List<Interceptor> interceptors) {
+            this.interceptors = interceptors;
             return this;
         }
 
@@ -407,7 +421,7 @@ public class RetrofitBuilder {
         headersHashMap = b.headersHashMap;
         isDebug = b.isDebug;
         isTrustSSL = b.isTrustSSL;
-        interceptor = b.interceptor;
+        interceptors = b.interceptors;
         factory = b.factory;
         sslSocketFactory = b.sslSocketFactory;
         protocols = b.protocols;
